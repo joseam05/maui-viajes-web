@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cruceros y Travesías | Maui Viajes</title>
+    
+    <meta name="description" content="Descubre los mejores cruceros por el Caribe, Mediterráneo y Sudamérica. Paquetes todo incluido, Disney Cruise Line y asesoría experta.">
+    <meta name="keywords" content="cruceros caribe, disney cruise line, cruceros mediterraneo, royal caribbean peru, viajes en barco, maui viajes">
+    <meta name="author" content="Maui Viajes">
+
+    <meta property="og:title" content="Navega tus Sueños con Maui Viajes">
+    <meta property="og:description" content="Gastronomía ilimitada, destinos múltiples y entretenimiento a bordo. Cotiza tu próximo crucero aquí.">
+    <meta property="og:image" content="img/crucero-hero.jpg">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/png" href="img/LogoMaui.png">
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/pages.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="app-header"></div>
+
+    <section class="cruise-hero">
+        <div class="hero-content-c">
+            <h1>Navega tus Sueños</h1>
+            <p>Despierta en un puerto nuevo cada mañana sin deshacer tus maletas.</p>
+        </div>
+    </section>
+
+    <section class="cruise-features">
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fa-solid fa-utensils"></i></div>
+            <h3>Gastronomía Ilimitada</h3>
+            <p>Buffets y restaurantes de especialidad incluidos.</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fa-solid fa-masks-theater"></i></div>
+            <h3>Shows a Bordo</h3>
+            <p>Entretenimiento nocturno estilo Broadway y casino.</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fa-solid fa-earth-americas"></i></div>
+            <h3>Múltiples Destinos</h3>
+            <p>Visita 3 o 4 países optimizando tu tiempo.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="cruise-filters" id="filtrador-principal">
+            <button class="pill-btn tab-btn active" data-filtro="todos">
+                <i class="fa-solid fa-anchor"></i> Todos
+            </button>
+            <button class="pill-btn tab-btn" data-filtro="caribe">
+                <i class="fa-solid fa-sun"></i> Caribe
+            </button>
+            <button class="pill-btn tab-btn" data-filtro="mediterraneo">
+                <i class="fa-solid fa-landmark-dome"></i> Mediterráneo
+            </button>
+            <button class="pill-btn tab-btn" data-filtro="disney">
+                <i class="fa-brands fa-fort-awesome"></i> Disney
+            </button>
+            <button class="pill-btn tab-btn" data-filtro="sudamerica">
+                <i class="fa-solid fa-map-location-dot"></i> Sudamérica
+            </button>
+        </div>
+
+        <h4 class="grid-title">Salidas Confirmadas 2025 - 2026</h4>
+
+        <div class="paquetes-grid" id="paquetes-grid">
+            <div class="loading-msg">Cargando próximas salidas...</div>
+        </div>
+    </div>
+
+    <div id="package-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-img-container">
+                <img src="" id="modal-imagen" class="modal-carousel-img" alt="Foto crucero">
+                <button class="modal-arrow prev" onclick="prevImage()">❮</button>
+                <button class="modal-arrow next" onclick="nextImage()">❯</button>
+            </div>
+            <div class="modal-info">
+                <span class="close close-modal">×</span>
+                <h2 id="modal-titulo"></h2>
+                <p id="modal-vigencia" class="modal-date"></p>
+                <div class="modal-scroll-area">
+                    <div id="modal-descripcion" class="modal-description-text"></div>
+                    <h4 class="section-title">Incluye:</h4>
+                    <ul id="modal-incluye" class="modal-includes"></ul>
+                </div>
+                
+                <div class="modal-footer-price">
+                    <div class="price-tag"><small>Desde</small><p id="modal-precio"></p></div>
+                    
+                    <div class="modal-action-buttons">
+                        <button id="btn-reservar-ws" class="btn-reservar full-width">
+                            LO QUIERO AL WHATSAPP
+                        </button>
+                
+                        <button id="btn-reservar-mail" class="btn-cotizar full-width">
+                            <i class="fa-regular fa-envelope"></i> ENVIAR A MI CORREO
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-cotizar" class="modal-cotizacion">
+        <div class="modal-cotizacion-content">
+            <span class="close" onclick="cerrarModalCotizar()">×</span>
+            <h2>Solicitar Cotización</h2>
+            <p>Déjanos tus datos y te enviaremos el itinerario detallado.</p>
+            
+            <div id="badge-paquete" class="package-badge">Crucero Seleccionado</div>
+
+            <form id="form-cotizar">
+                <input type="hidden" id="input-paquete" name="paquete_interes">
+                
+                <div class="form-group">
+                    <input type="text" name="nombre" placeholder="Tu Nombre Completo" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group half">
+                        <input type="tel" name="celular" placeholder="WhatsApp / Celular" required>
+                    </div>
+                    <div class="form-group half">
+                        <input type="number" name="pasajeros" placeholder="Pasajeros" required min="1">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Tu Correo Electrónico" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="label-small">Fecha aprox. de viaje:</label>
+                    <input type="date" name="fecha_viaje" required>
+                </div>
+
+                <div class="form-group">
+                    <textarea name="mensaje" rows="2" placeholder="¿Alguna duda específica? (Opcional)"></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary full-width">ENVIAR SOLICITUD</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app-footer"></div>
+
+    <script src="js/loader.js"></script>
+    <script type="module" src="js/api.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

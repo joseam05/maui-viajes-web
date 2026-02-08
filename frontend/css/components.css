@@ -1,0 +1,745 @@
+/* =========================================
+   css/components.css - COMPONENTES (TODO EN UNO)
+   ========================================= */
+
+/* === 1. BOTONES GLOBALES === */
+.btn-primary, .btn-nav, .btn-reservar, .btn-ver-detalles {
+    display: inline-block;
+    padding: 12px 28px;
+    background-color: var(--azul-noche);
+    color: var(--blanco);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    border: 1px solid var(--azul-noche);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-primary:hover, .btn-reservar:hover, .btn-ver-detalles:hover {
+    background-color: transparent;
+    color: var(--azul-noche);
+    border-color: var(--azul-noche);
+}
+
+/* Botón del menú (Nav) específico */
+.btn-nav {
+    padding: 10px 24px;
+    background-color: var(--oro-soft);
+    border-color: var(--oro-soft);
+    border-radius: 0;
+}
+.btn-nav:hover {
+    background-color: transparent;
+    color: var(--oro-soft);
+}
+
+/* === 2. FILTROS (PAQUETES) === */
+.filter-section-wrapper {
+    margin-top: -30px;
+    position: relative;
+    z-index: 10;
+    margin-bottom: 50px;
+}
+
+.filter-dashboard {
+    background: var(--blanco);
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    padding: 25px;
+    max-width: 1000px;
+    margin: 0 auto;
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+/* --- NIVEL 1: TABS --- */
+.filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    padding: 12px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #999;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.tab-btn i {
+    margin-right: 8px;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.tab-btn:hover { color: var(--azul-noche); }
+
+.tab-btn.active {
+    color: var(--azul-noche);
+    font-weight: 700;
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20%; 
+    width: 60%;
+    height: 2px;
+    background-color: var(--oro-soft);
+    border-radius: 2px;
+}
+
+/* Estilo especial para el tab de OFERTAS (Sin fuego) */
+.tab-btn.promo-tab { color: var(--oro-soft); }
+.tab-btn.promo-tab:hover { color: #b08d4b; }
+.tab-btn.promo-tab.active { color: #b08d4b; }
+.tab-btn.promo-tab.active::after { background-color: var(--oro-soft); }
+
+.filter-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #eee, transparent);
+    margin: 15px 0 25px;
+}
+
+/* --- NIVEL 0: INTERESES --- */
+.filter-scroll-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+.filter-scroll-container::-webkit-scrollbar { display: none; }
+
+.filter-label {
+    font-size: 0.85rem;
+    color: #aaa;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-right: 10px;
+    letter-spacing: 1px;
+}
+
+.filter-chip {
+    padding: 8px 20px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 50px;
+    color: #666;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-chip i { color: #ccc; font-size: 0.85rem; transition: color 0.3s; }
+
+.filter-chip:hover {
+    border-color: var(--oro-soft);
+    color: var(--azul-noche);
+    transform: translateY(-2px);
+}
+.filter-chip:hover i { color: var(--oro-soft); }
+
+.filter-chip.active {
+    background-color: #fff;
+    border-color: var(--azul-noche);
+    color: var(--azul-noche);
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+.filter-chip.active i { color: var(--azul-noche); }
+
+@media (max-width: 768px) {
+    .filter-dashboard { padding: 15px; margin: 0 10px; }
+    .filter-tabs { justify-content: flex-start; overflow-x: auto; padding-bottom: 5px; }
+}
+
+/* === 3. TARJETAS DE PAQUETES === */
+.paquetes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 20px 0 60px;
+    width: 100%;
+}
+
+.paquete-card {
+    background: var(--blanco);
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+    border: 1px solid transparent;
+}
+
+.paquete-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--sombra-hover);
+    border-color: rgba(197, 160, 89, 0.3);
+}
+
+.card-image-container {
+    position: relative;
+    height: 250px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.card-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.paquete-card:hover .card-image-container img { transform: scale(1.1); }
+
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top, rgba(15,23,42,0.6), transparent);
+    pointer-events: none;
+}
+
+/* ETIQUETAS */
+.promo-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: var(--oro-soft);
+    color: var(--blanco);
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    z-index: 5;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.duracion-tag {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    color: var(--blanco);
+    font-size: 0.85rem;
+    font-weight: 500;
+    z-index: 5;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.3);
+    padding: 4px 10px;
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+}
+
+.card-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--azul-noche);
+    margin-bottom: 5px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.subtitulo {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-features { list-style: none; padding: 0; margin: 0 0 25px 0; }
+.card-features li {
+    font-size: 0.9rem;
+    color: var(--texto);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.card-features li i { color: var(--oro-soft); font-size: 0.8rem; }
+
+.card-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px dashed #e2e8f0;
+}
+
+.precio-box { display: flex; flex-direction: column; }
+.precio-box small {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: -2px;
+}
+.precio-box strong {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--azul-noche);
+    font-weight: 700;
+}
+
+.btn-detalles {
+    background: transparent;
+    color: var(--azul-noche);
+    border: 1px solid var(--azul-noche);
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn-detalles:hover {
+    background: var(--azul-noche);
+    color: var(--blanco);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(15, 23, 42, 0.2);
+}
+
+/* ETIQUETA OFERTA (REEMPLAZO DE FUEGO POR ESTRELLA ELEGANTE) */
+.paquete.promocion::before {
+    content: "\f005  OFERTA EXCLUSIVA"; /* Icono Estrella (FontAwesome) */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--oro-soft);
+    color: #fff;
+    padding: 6px 15px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    z-index: 10;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(197, 160, 89, 0.4);
+}
+
+/* === 4. MODAL ÚNICO === */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.9);
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: var(--blanco);
+    width: 95%;
+    max-width: 1100px;
+    display: flex;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    max-height: 90vh;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.modal-img-container {
+    flex: 1.2;
+    position: relative;
+    background: #000;
+    overflow: hidden;
+}
+
+.modal-carousel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+}
+
+.modal-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.3);
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 10;
+}
+.modal-arrow:hover { background: rgba(0,0,0,0.8); }
+.modal-arrow.prev { left: 0; }
+.modal-arrow.next { right: 0; }
+
+.modal-info {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #ccc;
+    line-height: 1;
+    z-index: 20;
+    transition: color 0.3s;
+}
+.close:hover { color: var(--azul-noche); }
+
+.modal-info h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--azul-noche);
+    margin-top: 0;
+    margin-bottom: 5px;
+    padding-right: 30px;
+}
+
+.modal-date {
+    font-size: 0.9rem;
+    color: #c5a059;
+    font-weight: 600;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.modal-scroll-area {
+    overflow-y: auto;
+    padding-right: 15px;
+    flex-grow: 1;
+    margin-bottom: 20px;
+}
+.modal-scroll-area::-webkit-scrollbar { width: 6px; }
+.modal-scroll-area::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+
+.modal-description-text p {
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.modal-includes { list-style: none; padding: 0; margin: 20px 0; }
+.modal-includes li {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #334155;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-footer-price {
+    margin-top: auto;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.price-tag small { display: block; color: #999; font-size: 0.75rem; text-transform: uppercase; }
+.price-tag p { margin: 0; color: var(--azul-noche); font-size: 1.8rem; font-family: 'Playfair Display', serif; font-weight: 700; }
+
+.btn-reservar {
+    background-color: #25D366;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    text-transform: uppercase;
+}
+.btn-reservar:hover {
+    background-color: #128C7E;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+    .modal-content { flex-direction: column; height: 95vh; overflow-y: auto; }
+    .modal-img-container { height: 250px; flex: none; }
+    .modal-info { padding: 25px; height: auto; flex: none; }
+    .modal-scroll-area { max-height: none; overflow: visible; }
+}
+
+/* === 5. TARJETAS DE BENEFICIOS === */
+.beneficio {
+    background: var(--blanco);
+    padding: 30px 20px;
+    border-radius: 8px;
+    transition: var(--transition);
+    border: 1px solid transparent;
+    text-align: center;
+}
+.beneficio:hover {
+    box-shadow: 0 20px 40px -5px rgba(197, 160, 89, 0.15);
+    transform: translateY(-5px);
+    border-color: rgba(197, 160, 89, 0.2);
+}
+
+.beneficio-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--gris-seccion);
+    border-radius: 50%;
+    transition: var(--transition);
+}
+.beneficio-icon img {
+    width: 40px !important;
+    height: 40px !important;
+    object-fit: contain;
+    display: block;
+}
+
+.beneficio:hover .beneficio-icon { background-color: var(--azul-noche); }
+.beneficio:hover .beneficio-icon img { filter: brightness(0) invert(1); }
+
+/* === 6. CARRUSEL CLIENTES === */
+.clientes-carousel-wrapper {
+    overflow: hidden;
+    padding: 40px 0;
+    width: 100%;
+}
+.clientes-carousel {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.clientes-carousel img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    filter: grayscale(100%);
+    transition: var(--transition);
+    cursor: pointer;
+}
+.clientes-carousel img:hover {
+    filter: grayscale(0);
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(197, 160, 89, 0.2);
+}
+
+/* =========================================
+   AGREGAR AL FINAL DE css/components.css
+   ========================================= */
+
+/* --- 1. CONTENEDOR DE BOTONES (WhatsApp + Correo) --- */
+.modal-action-buttons {
+    display: flex;
+    flex-direction: column; /* En móviles uno debajo del otro */
+    gap: 10px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+@media (min-width: 768px) {
+    .modal-action-buttons {
+        flex-direction: row; /* En PC uno al lado del otro */
+    }
+}
+
+/* Clases de utilidad para los botones */
+.full-width {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+/* --- 2. ESTILO DEL BOTÓN "ENVIAR A MI CORREO" --- */
+.btn-cotizar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: transparent;
+    color: var(--azul-noche);
+    border: 2px solid var(--azul-noche);
+    padding: 12px 20px;
+    border-radius: 50px; /* Redondo */
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-cotizar:hover {
+    background-color: var(--azul-noche);
+    color: var(--blanco);
+    transform: translateY(-2px);
+}
+
+/* --- 3. MODAL DE FORMULARIO (COTIZACIÓN) --- */
+.modal-cotizacion {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 3000; /* Encima de todo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.9); /* Fondo oscuro elegante */
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-cotizacion-content {
+    background-color: var(--blanco);
+    padding: 35px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.4s ease forwards;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Animación de entrada */
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Textos del Modal */
+.modal-cotizacion h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--azul-noche);
+    margin-bottom: 5px;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+.modal-cotizacion p {
+    text-align: center;
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+}
+
+/* Badge del Paquete */
+.package-badge {
+    background: var(--azul-noche);
+    color: var(--oro-soft);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: table;
+    margin: 0 auto 25px;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+/* --- 4. CAMPOS DEL FORMULARIO (INPUTS) --- */
+.form-group { 
+    margin-bottom: 15px; 
+}
+
+/* Para poner inputs uno al lado del otro (Celular/Pasajeros) */
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+.half {
+    flex: 1;
+}
+
+.form-group input, 
+.form-group textarea, 
+.form-group select {
+    width: 100%;
+    padding: 14px; /* Más espacio para escribir */
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    transition: 0.3s;
+    background: #f8fafc;
+    color: var(--azul-noche);
+    box-sizing: border-box; /* IMPORTANTE para que no se salga del borde */
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--oro-soft);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.1);
+}
+
+.label-small {
+    font-size: 0.8rem; 
+    color: #64748b; 
+    margin-bottom: 6px; 
+    display: block;
+    font-weight: 500;
+}

@@ -1,0 +1,22 @@
+# OS / Editor
+.DS_Store
+__MACOSX/
+.vscode/
+
+# Node
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env / secrets
+.env
+**/.env
+backend/maui-key.json
+backend/*key*.json
+backend/*serviceAccount*.json
+
+# Uploads / build (ajusta según tu caso)
+backend/uploads/
+dist/
+build/

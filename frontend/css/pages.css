@@ -1,0 +1,865 @@
+/* =========================================
+   css/pages.css - ESTILOS DE PÁGINAS INTERNAS
+   ========================================= */
+
+/* -----------------------------------------
+   PÁGINA: BODAS Y LUNA DE MIEL (DISEÑO LUXURY)
+   ----------------------------------------- */
+
+/* 1. HERO SECTION (Impacto Cinematográfico) */
+.wedding-hero {
+    position: relative;
+    height: 85vh; /* Más alto, ocupa casi toda la pantalla */
+    background: url('../img/boda-hero.jpg') no-repeat center center/cover;
+    background-attachment: fixed; /* Efecto Parallax (el fondo se queda quieto al bajar) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--blanco);
+    margin-top: -80px; /* Detrás del header */
+    padding-top: 80px;
+}
+
+/* Capa oscura suave para que se lea el texto */
+.wedding-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.6));
+    z-index: 1;
+}
+
+.hero-content-w {
+    position: relative;
+    z-index: 2;
+    max-width: 850px;
+    padding: 0 20px;
+    animation: fadeInUp 1.2s ease-out;
+}
+
+.wedding-hero h1 { 
+    font-family: 'Playfair Display', serif; 
+    font-size: clamp(3rem, 6vw, 5rem); /* Título grande y elegante */
+    margin-bottom: 15px; 
+    line-height: 1.1;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+}
+
+.wedding-hero h1 span {
+    color: var(--oro-soft); 
+    font-style: italic; /* Toque manuscrito */
+    font-weight: 400;
+}
+
+.wedding-hero p { 
+    font-size: 1.2rem; 
+    font-weight: 300; 
+    letter-spacing: 2px; /* Espaciado premium */
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* 2. INTRODUCCIÓN (Fondo Crema/Marfil) */
+.wedding-intro { 
+    padding: 100px 20px; 
+    text-align: center; 
+    background-color: #fdfbf7; /* Color crema muy suave, típico de bodas */
+}
+
+.wedding-intro h2 { 
+    color: var(--azul-noche); 
+    font-family: 'Playfair Display', serif; 
+    font-size: 2.8rem; 
+    margin-bottom: 25px; 
+}
+
+.wedding-intro p { 
+    max-width: 750px; 
+    margin: 0 auto; 
+    color: #64748b; 
+    line-height: 2; /* Más espacio entre líneas para lectura relajada */
+    font-size: 1.1rem; 
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* 3. TARJETAS DE DESTINOS (Estilo Revista) */
+.wedding-types { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+    background: #000; /* Fondo negro para evitar líneas blancas */
+}
+
+.w-card { 
+    position: relative; 
+    height: 600px; /* Tarjetas muy altas */
+    overflow: hidden; 
+    cursor: pointer;
+}
+
+.w-card img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    transition: transform 0.8s ease;
+    opacity: 0.85; /* Un poco oscuras por defecto */
+}
+
+.w-card:hover img { 
+    transform: scale(1.1); 
+    opacity: 1; /* Brillantes al pasar el mouse */
+}
+
+.w-overlay {
+    position: absolute; 
+    inset: 0; 
+    /* Gradiente sutil que se oscurece abajo */
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, transparent 50%); 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: flex-end; 
+    padding: 50px 40px; 
+    color: var(--blanco);
+    transition: all 0.5s ease;
+}
+
+.w-card:hover .w-overlay {
+    background: linear-gradient(to top, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0.3) 100%);
+    padding-bottom: 60px; /* Pequeño salto hacia arriba */
+}
+
+.w-overlay h3 { 
+    font-family: 'Playfair Display', serif; 
+    font-size: 2.5rem; 
+    margin-bottom: 15px; 
+    color: var(--oro-soft);
+    border-left: 3px solid var(--oro-soft); /* Línea dorada al costado */
+    padding-left: 15px;
+}
+
+.w-overlay p { 
+    font-size: 1rem; 
+    color: rgba(255, 255, 255, 0.9); 
+    margin-bottom: 30px; 
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+/* Botones en tarjeta */
+.w-btn {
+    color: var(--blanco);
+    text-decoration: none;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 10px 20px;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+.w-btn:hover {
+    background: var(--oro-soft);
+    border-color: var(--oro-soft);
+    color: var(--azul-noche);
+}
+
+/* 4. SECCIÓN CERTIFICADOS (ARREGLADO) */
+.certificados-section {
+    padding: 100px 0;
+    background-color: var(--blanco);
+    overflow: hidden; /* Evita que si el diploma se sale, rompa la web */
+}
+
+.cert-grid {
+    display: flex;
+    align-items: center;
+    gap: 80px; 
+    flex-wrap: wrap; /* Para que en celular baje */
+}
+
+.cert-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.cert-text h2 {
+    font-size: 3rem; 
+    color: var(--azul-noche);
+    margin-bottom: 25px;
+}
+
+.cert-text p {
+    color: #475569;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.cert-list li {
+    font-size: 1.1rem;
+    padding: 10px 0;
+    border-bottom: 1px dashed #eee; 
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* --- COLLAGE DE FOTOS (LA SOLUCIÓN) --- */
+
+/* 1. Creamos una caja invisible para contener las dos fotos */
+.cert-images {
+    flex: 1;
+    min-width: 300px;
+    position: relative; /* IMPORTANTE: Esto permite usar 'absolute' adentro */
+    height: 450px; 
+    max-width: 400px; /* Ancho máximo para que no se estire infinito */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 2. La foto de tu mamá (Grande) */
+.img-perfil {
+    width: 300px; /* Tamaño controlado */
+    height: 400px;
+    object-fit: cover;
+    border-radius: 200px 200px 20px 20px; /* Arco elegante */
+    box-shadow: 20px 20px 0px var(--oro-soft); /* Sombra sólida */
+    position: relative;
+    z-index: 1; /* Abajo del diploma */
+}
+
+/* 3. La foto del diploma (Pequeña y Flotante) */
+.img-diploma {
+    width: 180px; /* AQUI ESTÁ EL TRUCO: Forzamos el tamaño pequeño */
+    height: auto;
+    
+    position: absolute; /* Flota sobre la otra foto */
+    bottom: 0px;      /* Pegado abajo */
+    right: 0px;       /* Pegado a la derecha */
+    
+    border: 6px solid var(--blanco); /* Marco blanco */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transform: rotate(-8deg); /* Inclinado */
+    z-index: 2; /* Encima de la foto de perfil */
+    transition: transform 0.3s ease;
+}
+
+.img-diploma:hover {
+    transform: rotate(0deg) scale(1.1);
+    z-index: 10;
+}
+
+/* Ajuste para Celulares */
+@media (max-width: 768px) {
+    .cert-grid {
+        flex-direction: column-reverse; /* Texto arriba, fotos abajo en móvil */
+        gap: 40px;
+    }
+    .cert-images {
+        height: 380px; 
+        margin: 0 auto;
+    }
+    .img-perfil {
+        width: 100%;
+        height: 100%;
+    }
+    .img-diploma {
+        width: 140px; /* Más pequeñito en móvil */
+        right: -10px;
+    }
+}
+
+/* --- 5. PROCESO (CORRECCIÓN: HORIZONTAL Y LIMPIO) --- */
+.w-process { 
+    padding: 80px 20px; 
+    background: #fdfbf7; /* Fondo Crema */
+    text-align: center; 
+}
+
+.w-process h2 {
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    color: var(--azul-noche);
+}
+
+.process-steps { 
+    display: flex; 
+    justify-content: center; /* Centrados horizontalmente */
+    align-items: flex-start; /* Alineados arriba */
+    gap: 40px; /* Espacio entre ellos */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.step { 
+    flex: 1; /* Todos ocupan el mismo ancho */
+    text-align: center;
+    padding: 0 10px;
+}
+
+.step-icon {
+    width: 90px; 
+    height: 90px; 
+    background: transparent; 
+    border: 1px solid var(--oro-soft); 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    margin: 0 auto 25px; 
+    font-size: 2rem; 
+    color: var(--oro-soft); 
+    transition: 0.4s;
+    position: relative;
+}
+
+/* Línea conectora entre pasos (Opcional, toque pro) */
+.step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 45px; /* A la mitad del icono */
+    right: -20px; /* Ajustar según gap */
+    width: 40px; /* Largo de la línea */
+    height: 1px;
+    background: #e2e8f0;
+    display: none; /* Se activa en pantallas muy anchas si quieres */
+}
+
+.step h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: var(--azul-noche);
+    font-weight: 700;
+}
+.step:hover h4 {
+    color: var(--oro-soft);
+}
+
+.step p {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+
+.step:hover {
+    transform: translateY(-10px); /* Sube todo el bloque */
+}
+
+/* 2. El icono cambia de color */
+.step:hover .step-icon {
+    background: var(--oro-soft); /* Fondo dorado */
+    color: var(--blanco);       /* Icono blanco */
+    box-shadow: 0 10px 25px rgba(197, 160, 89, 0.4); /* Sombra brillante */
+    border-color: transparent;
+}
+
+/* 3. Pequeño detalle: Sombra doble */
+.step-icon::after {
+    content: '';
+    position: absolute;
+    top: -5px; left: -5px; right: -5px; bottom: -5px;
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    border-radius: 50%;
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.step:hover .step-icon::after {
+    opacity: 1;
+    top: -10px; left: -10px; right: -10px; bottom: -10px; /* Se expande */
+}
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .process-steps {
+        flex-direction: column; 
+        align-items: center;
+        gap: 50px;
+    }
+}
+
+
+
+/* --- 6. CTA FINAL (CORRECCIÓN: BOTONES HORIZONTALES Y LINDOS) --- */
+.w-cta { 
+    background-color: var(--azul-noche);
+    /* Fondo limpio sin patrón o muy sutil */
+    padding: 100px 20px; 
+    text-align: center; 
+    position: relative;
+}
+
+.w-cta h2 {
+    color: #ffffff !important; 
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.w-cta p {
+    color: #cbd5e1 !important;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    font-weight: 300;
+}
+
+/* Contenedor para poner los botones uno al lado del otro */
+.w-cta-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Espacio entre botones */
+    flex-wrap: wrap; /* Para que en celular bajen si no caben */
+}
+
+/* Botón Principal (Dorado) */
+.btn-gold {
+    background: linear-gradient(45deg, #C5A059, #e6c885);
+    color: var(--azul-noche); 
+    padding: 15px 40px; 
+    border-radius: 50px;
+    text-decoration: none; 
+    font-weight: 800; 
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 10px 25px rgba(197, 160, 89, 0.3);
+    cursor: pointer;
+    min-width: 200px; /* Para que tengan el mismo ancho visual */
+    text-align: center;
+}
+
+.btn-gold:hover { 
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(197, 160, 89, 0.5);
+}
+
+/* Botón Secundario (Transparente Mejorado) */
+/* Ya no es ese borde largo y feo, ahora es compacto y elegante */
+.btn-cotizar-light {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Borde sutil */
+    padding: 14px 40px; /* Mismo tamaño que el otro */
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-width: 200px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.btn-cotizar-light:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+/* RESPONSIVE: Solo en celular los ponemos verticales de nuevo */
+@media (max-width: 768px) {
+    .process-steps {
+        flex-direction: column; /* Uno abajo del otro en móvil */
+        align-items: center;
+        gap: 50px;
+    }
+    
+    .w-cta-buttons {
+        flex-direction: column; /* Botones verticales en móvil */
+        gap: 15px;
+    }
+    
+    .btn-gold, .btn-cotizar-light {
+        width: 100%; /* Que ocupen todo el ancho en el celular */
+        max-width: 300px;
+    }
+}
+
+/* Animación simple */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Ajustes */
+@media (max-width: 768px) {
+    .wedding-hero { height: 60vh; background-attachment: scroll; }
+    .w-card { height: 450px; }
+    .cert-grid { flex-direction: column-reverse; }
+    .img-perfil { width: 100%; height: auto; border-radius: 20px; box-shadow: none; }
+    .img-diploma { position: relative; margin-top: -40px; right: 0; transform: none; width: 60%; }
+}
+
+
+/* -----------------------------------------
+   PÁGINA: CRUCEROS
+   ----------------------------------------- */
+/* css/pages.css */
+
+/* =========================================
+   HERO CRUCEROS CON MOVIMIENTO (KEN BURNS)
+   ========================================= */
+
+.cruise-hero {
+    /* 1. Definimos la caja bajita */
+    height: 20vh; 
+    position: relative;
+    overflow: hidden; /* Vital: esconde lo que se sale al hacer zoom */
+    
+    /* 2. Centrado del texto */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    
+    /* NOTA: Ya no ponemos background aquí directamente */
+}
+
+/* --- LA CAPA DE LA IMAGEN ANIMADA --- */
+.cruise-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* --- TU FOTO AQUÍ --- */
+    /* Asegúrate de que la ruta sea correcta */
+    background-image: url('../img/crucero-hero.jpg');
+    
+    /* --- LA CLAVE PARA QUE SE VEA BIEN --- */
+    /* 'cover': llena todo el espacio sin deformar */
+    /* 'center center': Centra la imagen horizontal y VERTICALMENTE */
+    background-size: cover;
+    background-position: center center; 
+    
+    z-index: -2; /* Al fondo */
+    
+    /* --- LA ANIMACIÓN --- */
+    /* 25s: Lento y elegante / alternate: va y viene */
+    animation: zoomSuave 15s infinite alternate ease-in-out;
+    
+    /* Un pequeño truco para que el movimiento sea más fluido */
+    transform-origin: center center;
+}
+
+/* --- LA CAPA DEL FILTRO OSCURO (Para que se lea el texto) --- */
+.cruise-hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gradiente Azul Noche transparente */
+    background: linear-gradient(rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.6));
+    z-index: -1; /* Encima de la foto, debajo del texto */
+}
+
+/* --- DEFINICIÓN DEL MOVIMIENTO --- */
+@keyframes zoomSuave {
+    0% {
+        transform: scale(1); /* Tamaño normal */
+    }
+    100% {
+        transform: scale(1.15); /* Zoom del 15% hacia adentro */
+    }
+}
+
+/* Estilos del texto (se mantienen igual) */
+.cruise-hero h1 { 
+    font-family: 'Playfair Display', serif; 
+    font-size: 4rem; 
+    margin-bottom: 10px; 
+    
+    /* CAMBIO CLAVE: COLOR BLANCO */
+    color: #ffffff; 
+    
+    /* SOMBRA: Ayuda a que se lea aunque la foto de atrás sea clara en partes */
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); 
+}
+
+.cruise-hero p { 
+    font-size: 1.3rem; 
+    max-width: 700px; 
+    font-weight: 300; 
+    
+    /* CAMBIO CLAVE: COLOR BLANCO SUAVE */
+    color: #f1f5f9; 
+    
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.cruise-features {
+    background: #f0f9ff;
+    padding: 50px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #e0f2fe;
+}
+.feature-item { text-align: center; max-width: 250px; }
+.feature-icon { font-size: 2.5rem; color: #0ea5e9; margin-bottom: 15px; }
+.feature-item h3 { color: #0f172a; margin-bottom: 5px; font-family: 'Playfair Display', serif; }
+.feature-item p { font-size: 0.9rem; color: #64748b; }
+
+.cruise-filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 40px 20px 20px;
+    flex-wrap: wrap;
+}
+.pill-btn {
+    background: white;
+    border: 1px solid #cbd5e1;
+    padding: 10px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: #64748b;
+    transition: 0.3s;
+    display: flex; align-items: center; gap: 8px;
+}
+.pill-btn:hover, .pill-btn.active {
+    background: #0ea5e9;
+    color: white;
+    border-color: #0ea5e9;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+}
+.grid-title { text-align: center; margin: 10px 0 30px; color: #0f172a; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; }
+
+/* ... (Mantén lo anterior de Bodas y Cruceros) ... */
+
+/* -----------------------------------------
+   PÁGINA: NOSOTROS (INSTITUCIONAL)
+   ----------------------------------------- */
+.page-header {
+    background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.8)), url('../img/nosotros-port.jpeg'); /* Pon una foto de oficina o paisaje */
+    background-size: cover;
+    background-position: center;
+    color: white; 
+    padding: 120px 20px 80px; 
+    text-align: center;
+}
+.page-header h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; color: #c5a059; margin-bottom: 15px; }
+.page-header p { font-size: 1.2rem; font-weight: 300; max-width: 600px; margin: 0 auto; opacity: 0.9; }
+
+/* Historia Aricely */
+.founder-story { padding: 80px 0; background: #fff; }
+.story-grid { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; }
+.story-img { flex: 1; min-width: 300px; position: relative; }
+.story-img img { width: 100%; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+.story-text { flex: 1.2; min-width: 300px; }
+.story-text h4 { color: #c5a059; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 10px; }
+.story-text h2 { font-size: 2.5rem; margin-bottom: 25px; line-height: 1.2; }
+.story-text p { color: #64748b; line-height: 1.8; margin-bottom: 20px; font-size: 1rem; }
+
+/* Servicios Detallados */
+.services-detail { padding: 60px 0; background: #fdfbf7; }
+.service-row { display: flex; flex-wrap: wrap; align-items: center; gap: 50px; margin-bottom: 80px; }
+.service-row:last-child { margin-bottom: 0; }
+.service-row:nth-child(even) { flex-direction: row-reverse; }
+
+.s-img { flex: 1; min-width: 300px; height: 350px; }
+.s-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+
+.s-text { flex: 1; min-width: 300px; }
+.s-text h3 { color: #0f172a; font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 15px; }
+.s-text p { color: #64748b; line-height: 1.6; margin-bottom: 20px; }
+.s-list { list-style: none; padding: 0; }
+.s-list li { margin-bottom: 12px; color: #334155; display: flex; align-items: center; gap: 10px; }
+.s-list i { color: #c5a059; font-size: 1.1rem; }
+
+/* Valores */
+.about-full { background: #fff; padding: 80px 0; text-align: center; }
+.about-grid-full { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; text-align: left; }
+.about-card { background: #fff; padding: 40px 30px; border-radius: 15px; border: 1px solid #f1f5f9; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; }
+.about-card:hover { transform: translateY(-5px); border-color: #c5a059; }
+.about-card h4 { color: #0f172a; font-size: 1.3rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+.about-card i { color: #c5a059; font-size: 1.5rem; }
+
+/* Mapa Ubicación */
+.location-section { padding: 80px 0; background: #0f172a; color: white; text-align: center; }
+.location-section h2 { color: white; margin-bottom: 10px; }
+.location-section p { color: #94a3b8; margin-bottom: 40px; }
+.map-container { 
+    width: 100%; height: 450px; 
+    border-radius: 20px; overflow: hidden; 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3); 
+    border: 5px solid rgba(255,255,255,0.1);
+}
+.map-container iframe { width: 100%; height: 100%; border: none; filter: grayscale(20%) contrast(1.1); }
+
+
+/* css/pages.css - SECCIÓN LEGAL */
+.legal-page {
+    padding: 120px 0 80px; /* Espacio para el header fijo */
+    background-color: #fff;
+}
+.legal-content {
+    max-width: 800px; /* Para que el texto no sea muy ancho y canse leer */
+    margin: 0 auto;
+    line-height: 1.8;
+    color: #475569;
+}
+.legal-content h1 { color: #0f172a; margin-bottom: 30px; font-size: 2.5rem; }
+.legal-content h3 { color: #c5a059; margin-top: 30px; margin-bottom: 15px; }
+.legal-content ul { padding-left: 20px; margin-bottom: 20px; }
+.legal-content li { margin-bottom: 10px; }
+
+/* --- BOTÓN DE COTIZAR --- */
+.btn-cotizar {
+    display: inline-block;
+    background-color: transparent;
+    color: #0f172a;
+    border: 2px solid #0f172a;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: 0.3s;
+    cursor: pointer;
+    margin-top: 10px;
+    text-align: center;
+}
+.btn-cotizar:hover {
+    background-color: #0f172a;
+    color: white;
+}
+/* Para que los botones queden alineados en las tarjetas */
+.card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* --- ESTILOS DEL MODAL DE COTIZACIÓN Y BOTONES --- */
+
+/* 1. Botón "Enviar a mi Correo" (Estilo elegante) */
+.btn-cotizar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: transparent;
+    color: #0f172a;
+    border: 2px solid #0f172a;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    width: 100%; /* Para que ocupe el ancho disponible */
+    font-family: 'Montserrat', sans-serif;
+}
+
+.btn-cotizar:hover {
+    background-color: #0f172a;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* 2. Contenedor de botones en el Modal de Detalles */
+.modal-action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* 3. Estilos del Modal de Formulario (El que pide datos) */
+.modal-cotizacion {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 3000; /* Encima de todo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.85); /* Fondo oscuro elegante */
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-cotizacion-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: slideUp 0.4s ease forwards;
+}
+
+.modal-cotizacion h2 {
+    font-family: 'Playfair Display', serif;
+    color: #c5a059;
+    margin-bottom: 5px;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+.modal-cotizacion p {
+    text-align: center;
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.package-badge {
+    background: #0f172a;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: block;
+    width: fit-content;
+    margin: 0 auto 25px;
+    text-align: center;
+}
+
+/* Inputs del formulario */
+.form-group { margin-bottom: 15px; }
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: #c5a059;
+    box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.1);
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}

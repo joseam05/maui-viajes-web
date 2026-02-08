@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bodas y Luna de Miel | Maui Viajes</title>
+    
+    <meta name="description" content="Organizamos tu Boda de Destino o Luna de Miel soñada. Paquetes a medida en el Caribe, Europa y destinos exóticos con asesoría experta.">
+    <meta name="keywords" content="bodas de destino, luna de miel, wedding planner peru, viajes de novios, caribe, europa, maui viajes">
+    <meta name="author" content="Maui Viajes">
+
+    <meta property="og:title" content="Bodas y Lunas de Miel Inolvidables | Maui Viajes">
+    <meta property="og:description" content="Diseñamos el inicio perfecto de tu historia. Cotiza tu boda en la playa o luna de miel con expertos.">
+    <meta property="og:image" content="img/boda-hero.jpg"> <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/png" href="img/LogoMaui.png">
+
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/pages.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app-header"></div>
+
+    <section class="wedding-hero">
+        <div class="hero-content-w">
+            <h1>El inicio de su historia <br><span>merece un escenario perfecto</span></h1>
+            <p>Bodas de Destino & Lunas de Miel diseñadas a medida.</p>
+            <button onclick="abrirModalCotizar('Boda Personalizada')" class="btn-gold">
+                EMPEZAR A PLANEAR
+            </button>
+        </div>
+    </section>
+
+    <section class="wedding-intro">
+        <div class="container">
+            <h2>Diseñamos momentos, no solo viajes</h2>
+            <p>
+                Una boda de destino es más que un evento; es una experiencia de varios días compartida con quienes más amas. 
+                En <strong>Maui Viajes</strong> nos encargamos de la logística compleja: vuelos de invitados, 
+                alojamiento, traslados y coordinación con el hotel, para que ustedes solo se preocupen por decir <em>"Sí, acepto"</em>.
+            </p>
+        </div>
+    </section>
+
+    <section class="wedding-types">
+        <div class="w-card">
+            <img src="img/boda-caribe.jpeg" alt="Ceremonia de boda en playa Caribe">
+            <div class="w-overlay">
+                <h3>Caribe Romántico</h3>
+                <p>Cancún, Punta Cana, Riviera Maya. Ceremonias al atardecer con arena blanca y mar turquesa.</p>
+                <div class="card-actions">
+                    <a href="https://wa.me/51951091498?text=Hola, me interesa una Boda en el Caribe" class="w-btn" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> Consultar
+                    </a>
+                    <button onclick="abrirModalCotizar('Boda Caribe')" class="w-btn" style="background:transparent; border:1px solid white;">
+                        Cotizar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-card">
+            <img src="img/boda-europa.jpeg" alt="Pareja en Luna de Miel Europa">
+            <div class="w-overlay">
+                <h3>Europa Clásica</h3>
+                <p>París, Venecia, Santorini. Una luna de miel llena de historia, cultura y romance puro.</p>
+                <div class="card-actions">
+                    <a href="https://wa.me/51951091498?text=Hola, me interesa Luna de Miel en Europa" class="w-btn" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> Consultar
+                    </a>
+                    <button onclick="abrirModalCotizar('Luna de Miel Europa')" class="w-btn" style="background:transparent; border:1px solid white;">
+                        Cotizar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-card">
+            <img src="img/boda-exotica.jpeg" alt="Bungalows sobre el agua Maldivas">
+            <div class="w-overlay">
+                <h3>Exóticos & Lujo</h3>
+                <p>Maldivas, Bora Bora, Tailandia. Para parejas que buscan privacidad absoluta y experiencias únicas.</p>
+                <div class="card-actions">
+                    <a href="https://wa.me/51951091498?text=Hola, me interesa un destino Exótico" class="w-btn" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> Consultar
+                    </a>
+                    <button onclick="abrirModalCotizar('Destino Exótico')" class="w-btn" style="background:transparent; border:1px solid white;">
+                        Cotizar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="certificados-section">
+        <div class="container">
+            <div class="cert-grid">
+                <div class="cert-text">
+                    <span class="tag-gold">TU TRANQUILIDAD ES PRIMERO</span>
+                    <h2>Especialista Certificada en Bodas</h2>
+                    <p>
+                        Planear una boda a distancia requiere confianza. Soy <strong>Aricely</strong>, 
+                        y cuento con certificación internacional como <em>Wedding & Event Planner</em> especializada en turismo.
+                    </p>
+                    <p>
+                        Tengo los contactos directos con los mejores hoteles y proveedores para asegurar 
+                        que reciban los beneficios VIP (Upgrades, cenas románticas, descuentos de grupo) que merecen.
+                    </p>
+                    <ul class="cert-list">
+                        <li><i class="fa-solid fa-certificate"></i> Certificación Wedding Specialist</li>
+                        <li><i class="fa-solid fa-hotel"></i> Alianzas directas con cadenas hoteleras</li>
+                        <li><i class="fa-solid fa-users"></i> Experiencia en grupos grandes</li>
+                    </ul>
+                </div>
+                <div class="cert-images">
+                    <img src="img/aricely-perfil.jpg" alt="Aricely Especialista Bodas" class="img-perfil">
+                    <img src="img/certificado-boda.jpg" alt="Certificado Wedding Planner" class="img-diploma">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="w-process">
+        <div class="container">
+            <h2 style="font-family: 'Playfair Display', serif; color: #0f172a;">Hacemos realidad lo imposible</h2>
+            
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-icon"><i class="fa-regular fa-comments"></i></div>
+                    <h4>1. La Cita</h4>
+                    <p>Nos reunimos (virtual o presencial) para entender su sueño y presupuesto.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon"><i class="fa-solid fa-plane-up"></i></div>
+                    <h4>2. Logística Total</h4>
+                    <p>Coordinamos vuelos, hoteles y traslados para todos sus invitados.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon"><i class="fa-solid fa-champagne-glasses"></i></div>
+                    <h4>3. El Gran Día</h4>
+                    <p>Ustedes disfrutan y celebran, nosotros cuidamos los detalles del viaje.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="w-cta">
+        <h2 style="font-family: 'Playfair Display', serif;">¿Listos para dar el sí?</h2>
+        <p>Agenda una asesoría gratuita de 15 minutos con nuestra especialista.</p>
+        
+        <div class="w-cta-buttons">
+            <a href="https://wa.me/51951091498?text=Hola, quiero agendar una cita para mi Boda" class="btn-gold" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i> Hablar con Experta
+            </a>
+            
+            <button onclick="abrirModalCotizar('Asesoría Boda')" class="btn-cotizar-light">
+                Solicitar Información
+            </button>
+        </div>
+    </section>
+
+    <div id="modal-cotizar" class="modal-cotizacion">
+        <div class="modal-cotizacion-content">
+            <span class="close" onclick="cerrarModalCotizar()">&times;</span>
+            <h2>Solicitar Cotización</h2>
+            <p>Déjanos tus datos y te contactaremos para coordinar.</p>
+            <div id="badge-paquete" class="package-badge">Boda / Luna de Miel</div>
+            
+            <form id="form-cotizar">
+                <input type="hidden" id="input-paquete" name="paquete_interes">
+                
+                <div class="form-group">
+                    <input type="text" name="nombre" placeholder="Nombre de los Novios" required>
+                </div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex:1;">
+                        <input type="tel" name="celular" placeholder="WhatsApp" required>
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <input type="number" name="pasajeros" placeholder="Invitados Aprox." required min="2">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Correo Electrónico" required>
+                </div>
+                
+                <div class="form-group">
+                    <label style="font-size: 0.8rem; color: #666;">Fecha tentativa de la boda/viaje:</label>
+                    <input type="date" name="fecha_viaje" required>
+                </div>
+                
+                <div class="form-group">
+                    <textarea name="mensaje" rows="3" placeholder="Cuéntanos tu idea (Destino, estilo, presupuesto...)"></textarea>
+                </div>
+                
+                <button type="submit" class="btn-primary" style="width: 100%;">ENVIAR SOLICITUD</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app-footer"></div>
+
+    <script src="js/loader.js"></script>
+    <script type="module" src="js/api.js"></script>
+    <script src="js/modal.js"></script> 
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

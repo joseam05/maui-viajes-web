@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paquetes - Maui Viajes</title>
+    <meta name="description" content="Agencia de viajes en Perú especialista en Bodas, Lunas de Miel, Cruceros y Paquetes a Europa y el Caribe. Asesoría personalizada y pagos flexibles.">
+<meta name="keywords" content="agencia de viajes peru, luna de miel, paquetes a cancun, cruceros, bodas de destino, maui viajes">
+<meta name="author" content="Maui Viajes">
+
+<meta property="og:title" content="Maui Viajes | Haz realidad el viaje de tus sueños">
+<meta property="og:description" content="Expertos en Lunas de Miel, Bodas y destinos exóticos. Cotiza tu próxima aventura con nosotros.">
+<meta property="og:image" content="https://tu-dominio.com/img/boda-hero.jpg"> <meta property="og:url" content="https://tu-dominio.com">
+<meta property="og:type" content="website">
+
+<link rel="icon" type="image/png" href="img/LogoMaui.png">
+
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/pages.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app-header"></div>
+    <div class="visual-bg-element left-fixed"></div>
+    <div class="visual-bg-element right-fixed"></div>
+
+    <section class="container filter-section-wrapper">
+        <div class="filter-dashboard">
+            <div class="filter-tabs" id="filtrador-principal">
+                <button class="tab-btn active" data-filtro="todos">
+                    <i class="fa-solid fa-globe"></i> Todo
+                </button>
+                <button class="tab-btn" data-filtro="nacional">
+                    <i class="fa-solid fa-map-location-dot"></i> Perú
+                </button>
+                <button class="tab-btn" data-filtro="internacional">
+                    <i class="fa-solid fa-plane-departure"></i> Internacional
+                </button>
+                <button class="tab-btn promo-tab" data-filtro="promociones">
+                    <i class="fa-solid fa-tag"></i> Ofertas
+                </button>
+            </div>
+
+            <div class="filter-divider"></div>
+
+            <div class="filter-scroll-container" id="filtrador-intereses">
+                <span class="filter-label">Experiencia:</span>
+                <button data-filtro="Aventura" class="filter-chip"><i class="fa-solid fa-person-hiking"></i> Aventura</button>
+                <button data-filtro="Playa" class="filter-chip"><i class="fa-solid fa-umbrella-beach"></i> Playa</button>
+                <button data-filtro="Historia" class="filter-chip"><i class="fa-solid fa-landmark"></i> Historia</button>
+                <button data-filtro="Familiar" class="filter-chip"><i class="fa-solid fa-people-roof"></i> Familiar</button>
+                <button data-filtro="Pareja" class="filter-chip"><i class="fa-solid fa-heart"></i> Pareja</button>
+                <button data-filtro="Relax" class="filter-chip"><i class="fa-solid fa-spa"></i> Relax</button>
+            </div>
+
+            <div id="filtrador-secundario" class="filter-sub-options" style="display:none;"></div>
+            <div id="filtrador-terciario" class="filter-sub-options" style="display:none;"></div>
+        </div>
+    </section>
+
+    <section id="promociones" class="container">
+        <h2>Promociones Destacadas</h2>
+        <div class="paquetes-grid" id="promociones-grid"></div>
+    </section>
+
+    <main class="paquetes-section">
+        <div class="container">
+            <h2>Paquetes Disponibles</h2>
+            <div class="paquetes-grid" id="paquetes-grid"></div>
+        </div>
+    </main>
+
+    <div id="package-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-img-container">
+                <img src="" alt="Imagen del paquete" id="modal-imagen" class="modal-carousel-img">
+                <button class="modal-arrow prev" id="modal-prev" onclick="prevImage()">&#10094;</button>
+                <button class="modal-arrow next" id="modal-next" onclick="nextImage()">&#10095;</button>
+            </div>
+
+            <div class="modal-info">
+                <span class="close close-modal">&times;</span>
+                <h2 id="modal-titulo">Titulo del Paquete</h2>
+                <p id="modal-vigencia" class="modal-date"></p>
+                
+                <div class="modal-scroll-area">
+                    <div id="modal-descripcion" class="modal-description-text"></div>
+                    <h4 class="section-title">Incluye:</h4>
+                    <ul id="modal-incluye" class="modal-includes"></ul>
+                </div>
+                
+                <div class="modal-footer-price">
+                    <div class="price-tag">
+                        <small>Precio final por persona</small>
+                        <p id="modal-precio"></p>
+                    </div>
+                    
+                    <div class="modal-action-buttons">
+                        <button id="btn-reservar-ws" class="btn-reservar" style="width: 100%;">
+                            <i class="fa-brands fa-whatsapp"></i> LO QUIERO AL WHATSAPP
+                        </button>
+                
+                        <button id="btn-reservar-mail" class="btn-cotizar">
+                            <i class="fa-regular fa-envelope"></i> ENVIAR A MI CORREO
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-cotizar" class="modal-cotizacion">
+        <div class="modal-cotizacion-content">
+            <span class="close" onclick="cerrarModalCotizar()">&times;</span>
+            <h2>Solicitar Cotización</h2>
+            <p>Déjanos tus datos y te enviaremos el itinerario detallado.</p>
+            
+            <div id="badge-paquete" class="package-badge">Paquete Seleccionado</div>
+
+            <form id="form-cotizar">
+                <input type="hidden" id="input-paquete" name="paquete_interes">
+                
+                <div class="form-group">
+                    <input type="text" name="nombre" placeholder="Tu Nombre Completo" required>
+                </div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex:1;">
+                        <input type="tel" name="celular" placeholder="WhatsApp / Celular" required>
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <input type="number" name="pasajeros" placeholder="Pasajeros" required min="1">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Tu Correo Electrónico" required>
+                </div>
+
+                <div class="form-group">
+                    <label style="font-size: 0.8rem; color: #666; margin-bottom: 5px; display:block;">Fecha aprox. de viaje:</label>
+                    <input type="date" name="fecha_viaje" required>
+                </div>
+
+                <div class="form-group">
+                    <textarea name="mensaje" rows="2" placeholder="¿Alguna duda específica? (Opcional)"></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%;">ENVIAR SOLICITUD</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app-footer"></div>
+
+    <script src="js/loader.js"></script>
+    <script type="module" src="js/api.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

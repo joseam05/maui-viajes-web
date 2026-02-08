@@ -1,0 +1,228 @@
+/* =========================================
+   css/main.css - ESTILOS PRINCIPALES Y HOME
+   ========================================= */
+
+/* 1. IMPORTACIÓN DE MÓDULOS (El orden importa) */
+@import url('variables.css');   /* Colores y fuentes */
+@import url('layout.css');      /* Estructura base, header, footer */
+@import url('components.css');  /* Botones, tarjetas, filtros, modales */
+
+/* =========================================
+   NUEVO DISEÑO: EXPERIENCIAS MAUI (VISUAL)
+   ========================================= */
+
+.experiencias-section {
+    padding: 80px 0;
+    background-color: #fff;
+}
+
+.experiencias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 50px;
+}
+
+/* LA TARJETA VISUAL */
+.visual-card {
+    position: relative;
+    height: 400px; /* Tarjetas altas e imponentes */
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end; /* Contenido abajo */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Capa oscura para que se lea el texto (Gradiente) */
+.visual-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.2) 60%, transparent 100%);
+    transition: background 0.4s ease;
+}
+
+/* El contenido (Texto e icono) */
+.visual-content {
+    position: relative;
+    z-index: 2;
+    padding: 30px;
+    width: 100%;
+    transform: translateY(20px); /* Ligeramente abajo para animar */
+    transition: transform 0.4s ease;
+}
+
+/* Tipografía dentro de la tarjeta */
+.visual-content i {
+    font-size: 1.8rem;
+    color: var(--oro-soft);
+    margin-bottom: 15px;
+    display: block;
+}
+
+.visual-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 5px;
+    line-height: 1.1;
+}
+
+.visual-content p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+/* Botón fantasma que aparece */
+.btn-visual {
+    display: inline-block;
+    color: var(--oro-soft);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0; /* Oculto por defecto */
+    transform: translateX(-10px);
+    transition: all 0.4s ease;
+}
+
+/* --- EFECTOS HOVER (MAGIA) --- */
+.visual-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.visual-card:hover .visual-overlay {
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.4) 100%);
+}
+
+.visual-card:hover .visual-content {
+    transform: translateY(0); /* Sube el texto */
+}
+
+.visual-card:hover .btn-visual {
+    opacity: 1; /* Aparece el botón */
+    transform: translateX(0);
+}
+
+/* =========================================
+   NUEVOS ESTILOS (AÑADIR AL FINAL DE MAIN.CSS)
+   ========================================= */
+
+/* 1. SEPARACIÓN DEL BOTÓN "COTIZAR MI VIAJE" */
+/* Esto le dará el aire que querías en la sección "Por qué elegirnos" */
+.cta-container-spaced {
+    margin-top: 60px; /* El espacio extra que pediste */
+    text-align: center;
+    width: 100%;
+}
+
+/* 2. SECCIÓN DE PREGUNTAS FRECUENTES (FAQ) */
+.faq-section {
+    padding: 80px 0;
+    background-color: var(--gris-seccion); /* Usamos tu variable de gris suave */
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.faq-item {
+    background: var(--blanco);
+    padding: 35px 30px;
+    border-radius: 12px;
+    box-shadow: var(--sombra-suave);
+    transition: var(--transition);
+    border: 1px solid transparent;
+}
+
+.faq-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-hover);
+    border-color: rgba(197, 160, 89, 0.3);
+}
+
+.faq-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.faq-header i {
+    color: var(--oro-soft);
+    font-size: 1.4rem;
+}
+
+.faq-header h4 {
+    margin: 0;
+    color: var(--azul-noche);
+    font-size: 1.1rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.faq-item p {
+    color: #64748b; /* Gris texto legible */
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+    padding-left: 0; /* Opcional: si quieres alinear con el titulo usa padding-left */
+}
+
+/* --- BOTÓN FLOTANTE WHATSAPP --- */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25d366;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 35px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Encima de todo, pero debajo de modales (que suelen ser 3000) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.whatsapp-float:hover {
+    background-color: #128c7e;
+    transform: scale(1.1); /* Crece un poquito */
+    color: white;
+}
+
+/* Animación de "Latido" para llamar la atención */
+@keyframes pulse-green {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+.whatsapp-float {
+    animation: pulse-green 2s infinite;
+}
+
+/* En celular lo subimos un poquito para que no tape textos legales del footer si es muy alto */
+@media (max-width: 768px) {
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        font-size: 28px;
+        bottom: 20px;
+        right: 20px;
+    }
+}

@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+    /* Paleta Premium */
+    --oro-soft: #C5A059;       /* Dorado elegante */
+    --azul-noche: #0F172A;     /* Azul profundo, casi negro (más moderno) */
+    --blanco: #FFFFFF;
+    --gris-fondo: #FAFAFA;     /* Blanco "roto" para el body */
+    --gris-seccion: #F3F4F6;   /* Gris suave para alternar secciones */
+    --texto: #334155;          /* Gris oscuro para lectura cómoda */
+    
+    /* Efectos */
+    --sombra-suave: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+    --sombra-hover: 0 20px 40px -5px rgba(197, 160, 89, 0.15);
+    --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}

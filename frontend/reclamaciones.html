@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libro de Reclamaciones | Maui Viajes</title>
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="img/LogoMaui.png">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        .reclamaciones-form { background: #f8fafc; padding: 40px; border-radius: 15px; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #0f172a; font-size: 0.9rem; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 8px; 
+            font-family: 'Montserrat', sans-serif; font-size: 0.95rem; transition: 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: #c5a059; outline: none; box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.1); }
+        
+        .indecopi-header { text-align: center; margin-bottom: 40px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 30px; }
+        .indecopi-header img { width: 250px; margin-bottom: 15px; }
+        .indecopi-header p { margin: 5px 0; color: #64748b; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <div id="app-header"></div>
+
+    <section class="legal-page">
+        <div class="container legal-content">
+            
+            <div class="indecopi-header">
+                <img src="img/libro-de-reclamaciones.png" alt="Libro de Reclamaciones">
+                <h1 style="margin-bottom: 10px;">Libro de Reclamaciones Virtual</h1>
+                <p><strong>Maui Viajes S.A.C</strong> | RUC: 20608542770</p>
+                <p>Dirección: Calle 19 171, San Miguel - Lima</p>
+            </div>
+
+            <form id="form-reclamaciones" class="reclamaciones-form">
+                
+                <h3>1. Identificación del Consumidor</h3>
+                <div class="form-group">
+                    <label>Nombre Completo:</label>
+                    <input type="text" name="nombre" required placeholder="Ej: Juan Pérez">
+                </div>
+                <div class="form-group">
+                    <label>DNI / Carnet de Extranjería:</label>
+                    <input type="text" name="dni" required placeholder="Ej: 77123456">
+                </div>
+                <div class="form-group">
+                    <label>Correo Electrónico:</label>
+                    <input type="email" name="email" required placeholder="tucorreo@ejemplo.com">
+                </div>
+                <div class="form-group">
+                    <label>Teléfono:</label>
+                    <input type="tel" name="telefono" required placeholder="Ej: 999888777">
+                </div>
+
+                <h3>2. Detalle de la Reclamación</h3>
+                <div class="form-group">
+                    <label>Tipo de Reclamo:</label>
+                    <select name="tipo">
+                        <option value="reclamo">Reclamo (Disconformidad con el servicio)</option>
+                        <option value="queja">Queja (Malestar en la atención)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Detalle de lo sucedido:</label>
+                    <textarea name="mensaje" rows="5" required placeholder="Cuéntanos qué pasó..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%;">ENVIAR HOJA DE RECLAMACIÓN</button>
+            </form>
+
+        </div>
+    </section>
+
+    <div id="global-footer"></div>
+    
+    <script src="js/components.js"></script>
+    <script src="js/reclamaciones.js"></script> 
+</body>
+</html>
