@@ -1,13 +1,13 @@
 // frontend/js/admin.js
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = '/api';
 let usuarioActual = { nombre: '', rol: '' };
 
 // 1. COMPRESIÓN DE IMÁGENES (SÍ, ESTÁ AQUÍ 👇)
 async function comprimirImagen(archivo) {
     return new Promise((resolve) => {
-        const maxWidth = 1200; 
-        const quality = 0.7;   
+        const maxWidth = 1200;
+        const quality = 0.7;
         const reader = new FileReader();
         reader.readAsDataURL(archivo);
         reader.onload = (event) => {
@@ -58,10 +58,10 @@ function configurarInterfaz() {
     document.getElementById('role-display').textContent = usuarioActual.rol.toUpperCase();
     document.getElementById('avatar-initial').textContent = usuarioActual.nombre.charAt(0).toUpperCase();
     // Counter ve formulario pero no borra
-    document.getElementById('card-crear-paquete').classList.remove('hidden'); 
+    document.getElementById('card-crear-paquete').classList.remove('hidden');
 }
 
-function logout() { if(confirm("¿Salir?")) location.reload(); }
+function logout() { if (confirm("¿Salir?")) location.reload(); }
 
 // 3. CARGAR PAQUETES (CON BADGES LUXURY ✨)
 async function cargarPaquetes() {
@@ -77,7 +77,7 @@ async function cargarPaquetes() {
 
         paquetes.forEach(p => {
             const img = (p.imagenes && p.imagenes.length > 0) ? p.imagenes[0] : 'img/placeholder.jpg';
-            
+
             // GENERAR BADGES HTML
             const tagPromo = p.is_promo ? '<span class="badge badge-promo">🔥 OFERTA</span>' : '';
             const tagCrucero = p.tipo === 'crucero' ? '<span class="badge badge-cruise">🚢 CRUCERO</span>' : '';
@@ -113,7 +113,7 @@ async function borrarPaquete(id) {
 document.getElementById('tour-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!confirm("¿Publicar servicio?")) return;
-    
+
     const btn = document.getElementById('btn-submit');
     const loader = document.getElementById('loader');
     btn.disabled = true; loader.style.display = 'block';
@@ -140,9 +140,9 @@ document.getElementById('tour-form').addEventListener('submit', async (e) => {
 
         const res = await fetch(`${API_URL}/crear-paquete`, { method: 'POST', body: formData });
         const data = await res.json();
-        if(data.success) { 
-            alert("✅ Publicado"); 
-            e.target.reset(); 
+        if (data.success) {
+            alert("✅ Publicado");
+            e.target.reset();
             document.getElementById('gallery').innerHTML = '';
             cargarPaquetes();
         } else { alert("Error: " + data.error); }
@@ -164,7 +164,7 @@ async function cargarSolicitudes() {
 
         data.forEach(s => {
             const fecha = s.fecha ? new Date(s.fecha).toLocaleDateString() : '-';
-            
+
             // BOTÓN BORRAR (Admin/Dev)
             let btnBorrar = '';
             if (usuarioActual.rol === 'admin' || usuarioActual.rol === 'dev') {
@@ -191,17 +191,17 @@ async function borrarSolicitud(id) {
 }
 
 // 6. UI
-window.cambiarPestana = function(tab) {
+window.cambiarPestana = function (tab) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`tab-${tab}`).classList.add('active');
-    
+
     const idx = tab === 'paquetes' ? 0 : 1;
     document.querySelectorAll('.nav-btn')[idx].classList.add('active');
-    if(tab === 'solicitudes') cargarSolicitudes();
+    if (tab === 'solicitudes') cargarSolicitudes();
 };
 
-window.actualizarEstiloTipo = function(tipo) {
+window.actualizarEstiloTipo = function (tipo) {
     const box = document.querySelector('.type-selector-box');
     const gPaq = document.querySelector('.group-paquete');
     const gCru = document.querySelector('.group-crucero');
@@ -215,7 +215,7 @@ window.actualizarEstiloTipo = function(tipo) {
     }
 };
 
-window.previewImages = function(input) {
+window.previewImages = function (input) {
     const g = document.getElementById('gallery'); g.innerHTML = '';
     if (input.files) Array.from(input.files).forEach(f => {
         const r = new FileReader();

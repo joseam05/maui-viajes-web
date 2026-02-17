@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.log("⚓ MODO CRUCEROS ACTIVADO");
                 // Solo guardamos los que sean tipo 'crucero'
                 window.rawData = allData.filter(p => p.tipo === 'crucero');
-            } 
+            }
             else if (path.includes('paquetes.html')) {
                 console.log("📦 MODO PAQUETES ACTIVADO");
                 // Guardamos paquetes O que no tengan tipo (para compatibilidad con los viejos)
@@ -43,8 +43,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 2. ACTIVAR BOTONES DE FILTRO
     setupFilters();
-// --- 3. PINTAR LA PANTALLA (CORREGIDO) ---
-    
+    // --- 3. PINTAR LA PANTALLA (CORREGIDO) ---
+
     const gridPaquetes = document.getElementById('paquetes-grid');
     const gridPromos = document.getElementById('promociones-grid');
 
@@ -54,17 +54,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Filtramos solo los que tienen is_promo = true
         // IMPORTANTE: Asegúrate que en Firebase tus paquetes tengan el campo "is_promo" como boolean true
         const soloPromos = window.rawData.filter(p => p.is_promo === true);
-        
+
         console.log(`🔥 Promociones encontradas: ${soloPromos.length}`);
 
         if (soloPromos.length > 0) {
-            if(window.renderPackageGrid) {
+            if (window.renderPackageGrid) {
                 window.renderPackageGrid(soloPromos, 'promociones-grid');
             }
         } else {
             // Opcional: Ocultar la sección entera si no hay promociones activas
             const sectionPromos = document.getElementById('promociones');
-            if(sectionPromos) sectionPromos.style.display = 'none';
+            if (sectionPromos) sectionPromos.style.display = 'none';
         }
     }
 
@@ -82,13 +82,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 function setupFilters() {
     // 1. TABS PRINCIPALES (Píldoras o Botones Superiores)
     const filtrosPrincipales = document.querySelectorAll('#filtrador-principal .tab-btn, #filtrador-principal .pill-btn');
-    
+
     filtrosPrincipales.forEach(btn => {
         btn.addEventListener('click', (e) => {
             // Visual
             filtrosPrincipales.forEach(b => b.classList.remove('active'));
             e.currentTarget.classList.add('active');
-            
+
             // Lógica
             window.currentPrimary = e.currentTarget.dataset.filtro; // ej: 'caribe', 'nacional'
             window.updateUI();
@@ -97,12 +97,12 @@ function setupFilters() {
 
     // 2. CHIPS DE INTERESES (Checkboxes secundarios)
     const filtrosIntereses = document.querySelectorAll('#filtrador-intereses .filter-chip');
-    
+
     filtrosIntereses.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.currentTarget.classList.toggle('active');
             const interest = e.currentTarget.dataset.filtro;
-            
+
             if (e.currentTarget.classList.contains('active')) {
                 window.activeInterests.push(interest);
             } else {
@@ -115,7 +115,7 @@ function setupFilters() {
 
 // --- FUNCIÓN QUE ACTUALIZA LA PANTALLA ---
 // --- FUNCIÓN QUE ACTUALIZA LA PANTALLA (EN JS/MAIN.JS) ---
-window.updateUI = function() {
+window.updateUI = function () {
     const grid = document.getElementById('paquetes-grid');
     if (!grid) return;
 
@@ -124,7 +124,7 @@ window.updateUI = function() {
         grid.innerHTML = '<p style="text-align:center; width:100%; color:#666;">No hay resultados disponibles.</p>';
         return;
     }
-    
+
     // 2. Filtrar datos
     let dataShow = window.rawData;
     if (window.applyFilters) {
@@ -133,7 +133,7 @@ window.updateUI = function() {
 
     // 3. LOGICA ANTI-DUPLICADOS (EL CAMBIO MÁGICO ✨)
     const topPromosSection = document.getElementById('promociones'); // La sección de arriba
-    
+
     if (topPromosSection) {
         if (window.currentPrimary === 'promociones') {
             // Si el usuario filtró "Ofertas", ocultamos la sección de arriba para no ver doble
@@ -143,7 +143,7 @@ window.updateUI = function() {
             topPromosSection.style.display = 'block';
         }
     }
-    
+
     // 4. Pintar la grilla de abajo
     if (window.renderPackageGrid) {
         window.renderPackageGrid(dataShow, 'paquetes-grid');
@@ -153,12 +153,12 @@ window.updateUI = function() {
 // --- FUNCIONES PARA EL MODAL DE COTIZACIÓN ---
 // Estas funciones deben ser globales para que los botones HTML las encuentren
 
-window.abrirModalCotizar = function(nombrePaquete) {
+window.abrirModalCotizar = function (nombrePaquete) {
     const modal = document.getElementById('modal-cotizar');
     const badge = document.getElementById('badge-paquete');
     const inputHidden = document.getElementById('input-paquete');
 
-    if(modal) {
+    if (modal) {
         // Llenamos el modal con el nombre del paquete que le dimos click
         badge.innerText = "Interés: " + nombrePaquete;
         inputHidden.value = nombrePaquete;
@@ -166,9 +166,9 @@ window.abrirModalCotizar = function(nombrePaquete) {
     }
 }
 
-window.cerrarModalCotizar = function() {
+window.cerrarModalCotizar = function () {
     const modal = document.getElementById('modal-cotizar');
-    if(modal) modal.style.display = "none";
+    if (modal) modal.style.display = "none";
 }
 
 // NOTA: Borré el window.onclick de aquí porque ya está en modal.js y maneja ambos modales.
@@ -178,10 +178,10 @@ const formCotizar = document.getElementById('form-cotizar');
 if (formCotizar) {
     formCotizar.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const btn = formCotizar.querySelector('button');
         const textoOriginal = btn.innerText;
-        
+
         btn.innerText = "Enviando...";
         btn.disabled = true;
 
@@ -190,9 +190,9 @@ if (formCotizar) {
 
         try {
             // Asegúrate que el puerto coincida con tu backend (3000 o 5000)
-            const res = await fetch('http://localhost:3000/api/solicitar-info', {
+            const res = await fetch('/api/solicitar-info', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(datos)
             });
 
@@ -210,7 +210,7 @@ if (formCotizar) {
                 } else {
                     alert('¡Solicitud Enviada! Revisa tu correo pronto.');
                 }
-                
+
                 cerrarModalCotizar();
                 formCotizar.reset();
             } else {
@@ -232,16 +232,9 @@ if (formCotizar) {
 
 // --- UI GLOBAL (Menú, Carrusel) ---
 function setupGlobalUI() {
-    const menuToggle = document.getElementById('menu-toggle');
-    const navMenu = document.querySelector('#nav-menu-container');
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            const icon = menuToggle.querySelector('i');
-            if (icon) icon.className = navMenu.classList.contains('active') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
-        });
-    }
-    
+    // Menú móvil: el listener ya se registra en components.js al inyectar el header.
+    // No duplicamos aquí para evitar toggle doble.
+
     // Carrusel Hero (Solo si existe)
     const heroSection = document.querySelector('.hero'); // Clase del home
     if (heroSection) {

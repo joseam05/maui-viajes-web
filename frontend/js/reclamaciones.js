@@ -17,8 +17,8 @@ if (formReclamos) {
         btnSubmit.disabled = true;
 
         try {
-            // 2. Enviar al Backend (Asegúrate que el puerto sea el correcto, usualmente 3000 o 5000)
-            const response = await fetch('http://localhost:3000/api/reclamaciones', {
+            // 2. Enviar al Backend
+            const response = await fetch('/api/reclamaciones', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -30,12 +30,16 @@ if (formReclamos) {
 
             if (result.success) {
                 // 3. Éxito
-                Swal.fire({
-                    title: '¡Reclamo Registrado!',
-                    text: `Tu código de seguimiento es: ${result.codigo}. Hemos recibido tu solicitud.`,
-                    icon: 'success',
-                    confirmButtonColor: '#0f172a'
-                });
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        title: '¡Reclamo Registrado!',
+                        text: `Tu código de seguimiento es: ${result.codigo}. Hemos recibido tu solicitud.`,
+                        icon: 'success',
+                        confirmButtonColor: '#0f172a'
+                    });
+                } else {
+                    alert(`¡Reclamo Registrado! Tu código de seguimiento es: ${result.codigo}`);
+                }
                 formReclamos.reset(); // Limpiar formulario
             } else {
                 throw new Error(result.error || 'Error desconocido');
@@ -44,12 +48,16 @@ if (formReclamos) {
         } catch (error) {
             // 4. Error
             console.error(error);
-            Swal.fire({
-                title: 'Error',
-                text: 'Hubo un problema al enviar el reclamo. Por favor intenta nuevamente.',
-                icon: 'error',
-                confirmButtonColor: '#0f172a'
-            });
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Hubo un problema al enviar el reclamo. Por favor intenta nuevamente.',
+                    icon: 'error',
+                    confirmButtonColor: '#0f172a'
+                });
+            } else {
+                alert('Hubo un problema al enviar el reclamo. Por favor intenta nuevamente.');
+            }
         } finally {
             // Restaurar botón
             btnSubmit.innerText = textoOriginal;

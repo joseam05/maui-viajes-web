@@ -11,11 +11,11 @@ const nodemailer = require('nodemailer');
 
 // 1. CONFIGURACIÓN INICIAL
 const app = express();
-app.use(cors({ origin: process.env.CORS_ORIGIN || '*'}));
+app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
 app.use(express.json());
 
-// Servir archivos estáticos
-app.use(express.static(path.join(__dirname, '../')));
+// Servir archivos estáticos (SOLO la carpeta frontend)
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // 2. CONEXIÓN FIREBASE
 // IMPORTANTE: NO subas credenciales (service account) a GitHub.
@@ -89,10 +89,10 @@ app.get('/api/paquetes-admin', async (req, res) => {
 app.post('/api/crear-paquete', upload.array('fotos'), async (req, res) => {
     try {
         const { titulo, precio, descripcion, categoria, tipo, is_promo, moneda, duracion, vigencia, intereses, incluye, subtitulo, ubicacion } = req.body;
-        
+
         // Corrección de array de intereses
         let tags = intereses ? (Array.isArray(intereses) ? intereses : [intereses]) : [];
-        
+
         // Si es crucero, forzamos la etiqueta para que los filtros funcionen
         if (tipo === 'crucero') {
             if (!tags.includes('crucero')) tags.push('crucero');
@@ -218,6 +218,39 @@ app.post('/api/solicitar-info', async (req, res) => {
     }
 
     res.json({ success: true, message: 'Solicitud enviada correctamente' });
+});
+
+// ==========================================
+// 📋 LIBRO DE RECLAMACIONES
+// ==========================================
+app.post('/api/reclamaciones', async (req, res) => {
+    console.log("📋 Recibiendo reclamo en /api/reclamaciones ...");
+    const { nombre, dni, email, telefono, tipo, detalle, pedido } = req.body;
+
+    try {
+        // Generar código de seguimiento
+        const codigo = `RCL-${Date.now().toString(36).toUpperCase()}`;
+
+        await db.collection('reclamaciones').add({
+            codigo,
+            nombre: nombre || '',
+            dni: dni || '',
+            email: email || '',
+            telefono: telefono || '',
+            tipo: tipo || 'reclamo',
+            detalle: detalle || '',
+            pedido: pedido || '',
+            estado: 'pendiente',
+            fecha: admin.firestore.FieldValue.serverTimestamp()
+        });
+
+        console.log("✅ Reclamo registrado con código:", codigo);
+        res.json({ success: true, codigo });
+
+    } catch (error) {
+        console.error("❌ Error guardando reclamo:", error);
+        res.status(500).json({ success: false, error: error.message });
+    }
 });
 
 // ==========================================
