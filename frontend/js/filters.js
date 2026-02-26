@@ -37,7 +37,7 @@ window.applyFilters = function (data, primaryFilter, activeInterests = []) {
     if (activeInterests.length > 0) {
         filtered = filtered.filter(p => {
             // Buscamos en los TAGS oficiales (lo más preciso)
-            const etiquetas = p.intereses || p.tags || [];
+            const etiquetas = (p.intereses || p.tags || []).map(t => t.toLowerCase());
             const tieneTag = etiquetas.length > 0 && activeInterests.some(interes => etiquetas.includes(interes.toLowerCase()));
 
             // Buscamos en el TEXTO (respaldo por si no se etiquetó bien)
@@ -51,6 +51,23 @@ window.applyFilters = function (data, primaryFilter, activeInterests = []) {
             const tieneTexto = activeInterests.some(interes => textoPaquete.includes(interes.toLowerCase()));
 
             return tieneTag || tieneTexto;
+        });
+    }
+
+    // 3. BUSCADOR INTELIGENTE (Texto libre)
+    const query = (window.searchQuery || '').toLowerCase().trim();
+    if (query) {
+        filtered = filtered.filter(p => {
+            const campos = [
+                p.titulo,
+                p.subtitulo,
+                p.descripcion,
+                p.ubicacion,
+                p.categoria,
+                ...(p.intereses || p.tags || [])
+            ].filter(Boolean).join(' ').toLowerCase();
+
+            return campos.includes(query);
         });
     }
 

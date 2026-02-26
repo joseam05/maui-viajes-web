@@ -37,6 +37,19 @@
 
     <section class="container filter-section-wrapper">
         <div class="filter-dashboard">
+            <!-- BUSCADOR + CONVERSOR DE MONEDA -->
+            <div class="search-bar-wrapper">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="search-input" placeholder="Buscar destino, paquete o experiencia..."
+                        autocomplete="off">
+                </div>
+                <div class="currency-toggle" id="currency-toggle">
+                    <button class="currency-btn active" data-currency="PEN"><span>S/.</span></button>
+                    <button class="currency-btn" data-currency="USD"><span>US$</span></button>
+                </div>
+            </div>
+
             <div class="filter-tabs" id="filtrador-principal">
                 <button class="tab-btn active" data-filtro="todos">
                     <i class="fa-solid fa-globe"></i> Todo
@@ -49,6 +62,9 @@
                 </button>
                 <button class="tab-btn promo-tab" data-filtro="promociones">
                     <i class="fa-solid fa-tag"></i> Ofertas
+                </button>
+                <button class="tab-btn fav-tab" data-filtro="favoritos">
+                    <i class="fa-solid fa-heart"></i> Favoritos
                 </button>
             </div>
 
@@ -88,7 +104,8 @@
     <div id="package-modal" class="modal">
         <div class="modal-content">
             <div class="modal-img-container">
-                <img src="" alt="Imagen del paquete" id="modal-imagen" class="modal-carousel-img">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                    alt="Imagen del paquete" id="modal-imagen" class="modal-carousel-img">
                 <button class="modal-arrow prev" id="modal-prev" onclick="prevImage()">&#10094;</button>
                 <button class="modal-arrow next" id="modal-next" onclick="nextImage()">&#10095;</button>
             </div>

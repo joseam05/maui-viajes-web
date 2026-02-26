@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maui Admin | Panel de Control</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <link rel="stylesheet" href="css/admin.css">
 </head>
+
 <body>
 
     <div id="login-screen">
@@ -27,7 +31,7 @@
     </div>
 
     <div id="admin-panel" style="display: none;">
-        
+
         <header class="top-bar">
             <div class="brand">
                 <i class="fa-solid fa-plane-departure icon-gold"></i>
@@ -40,6 +44,24 @@
                 </button>
                 <button class="nav-btn" onclick="cambiarPestana('solicitudes')">
                     <i class="fa-solid fa-envelope-open-text"></i> Solicitudes
+                </button>
+                <button class="nav-btn" onclick="cambiarPestana('newsletter')">
+                    <i class="fa-solid fa-at"></i> Newsletter
+                </button>
+                <button class="nav-btn" id="nav-reclamos" onclick="cambiarPestana('reclamos')">
+                    <i class="fa-solid fa-book-open"></i> Reclamos
+                </button>
+                <button class="nav-btn" id="nav-papelera" onclick="cambiarPestana('papelera')">
+                    <i class="fa-solid fa-trash-can"></i> Papelera
+                </button>
+                <button class="nav-btn" id="nav-clientes" onclick="cambiarPestana('clientes')">
+                    <i class="fa-solid fa-user-group"></i> Clientes
+                </button>
+                <button class="nav-btn" id="nav-dashboard" onclick="cambiarPestana('dashboard')">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </button>
+                <button class="nav-btn" id="nav-accesos" onclick="cambiarPestana('accesos')" style="display:none;">
+                    <i class="fa-solid fa-satellite-dish"></i> Accesos
                 </button>
             </nav>
 
@@ -56,7 +78,7 @@
         </header>
 
         <div id="tab-paquetes" class="tab-content active dashboard-grid">
-            
+
             <div class="card" id="card-crear-paquete">
                 <div class="card-header">
                     <h2><i class="fa-solid fa-plus-circle icon-gold"></i> Publicar Servicio</h2>
@@ -72,12 +94,15 @@
                     </div>
 
                     <div class="form-row">
-                        <div><label>Título</label><input type="text" name="titulo" required placeholder="Ej: Punta Cana 2026"></div>
-                        <div><label>Subtítulo</label><input type="text" name="subtitulo" placeholder="Ej: Todo incluido 5 días"></div>
+                        <div><label>Título</label><input type="text" name="titulo" required
+                                placeholder="Ej: Punta Cana 2026"></div>
+                        <div><label>Subtítulo</label><input type="text" name="subtitulo"
+                                placeholder="Ej: Todo incluido 5 días"></div>
                     </div>
-                    
+
                     <div class="form-row">
-                        <div><label>Ubicación</label><input type="text" name="ubicacion" required placeholder="País o Ciudad"></div>
+                        <div><label>Ubicación</label><input type="text" name="ubicacion" required
+                                placeholder="País o Ciudad"></div>
                         <div>
                             <label>Categoría</label>
                             <select name="categoria">
@@ -89,7 +114,8 @@
                     </div>
 
                     <div class="form-row">
-                        <div><label>Precio</label><input type="number" name="precio" required placeholder="0.00" step="0.01"></div>
+                        <div><label>Precio</label><input type="number" name="precio" required placeholder="0.00"
+                                step="0.01"></div>
                         <div>
                             <label>Moneda</label>
                             <select name="moneda">
@@ -100,29 +126,53 @@
                     </div>
 
                     <div class="form-row">
-                        <div><label>Duración</label><input type="text" name="duracion" required placeholder="Ej: 4D/3N"></div>
-                        <div><label>Vigencia</label><input type="text" name="vigencia" placeholder="Ej: Hasta agotar stock"></div>
+                        <div><label>Duración</label><input type="text" name="duracion" required placeholder="Ej: 4D/3N">
+                        </div>
+                        <div><label>Vigencia</label><input type="text" name="vigencia"
+                                placeholder="Ej: Hasta agotar stock"></div>
                     </div>
 
                     <div class="form-group">
                         <label>Etiquetas (Filtros):</label>
                         <div class="checkbox-container">
-                            
-                            <input type="checkbox" id="chk-familiar" name="intereses" value="familiar"><label for="chk-familiar">👨‍👩‍👧‍👦 Familiar</label>
-                            <input type="checkbox" id="chk-pareja" name="intereses" value="pareja"><label for="chk-pareja">💍 Pareja</label>
-                            <input type="checkbox" id="chk-playa" name="intereses" value="playa"><label for="chk-playa">🏖️ Playa</label>
+
+                            <input type="checkbox" id="chk-familiar" name="intereses" value="familiar"><label
+                                for="chk-familiar">👨‍👩‍👧‍👦 Familiar</label>
+                            <input type="checkbox" id="chk-pareja" name="intereses" value="pareja"><label
+                                for="chk-pareja">💍 Pareja</label>
+                            <input type="checkbox" id="chk-playa" name="intereses" value="playa"><label
+                                for="chk-playa">🏖️ Playa</label>
 
                             <span class="filter-group group-paquete">
-                                <input type="checkbox" id="chk-aventura" name="intereses" value="aventura"><label for="chk-aventura">🧗 Aventura</label>
-                                <input type="checkbox" id="chk-historia" name="intereses" value="historia"><label for="chk-historia">🏛️ Historia</label>
-                                <input type="checkbox" id="chk-disney" name="intereses" value="disney"><label for="chk-disney">🏰 Disney</label>
+                                <input type="checkbox" id="chk-aventura" name="intereses" value="aventura"><label
+                                    for="chk-aventura">🧗 Aventura</label>
+                                <input type="checkbox" id="chk-historia" name="intereses" value="historia"><label
+                                    for="chk-historia">🏛️ Historia</label>
+                                <input type="checkbox" id="chk-relax" name="intereses" value="relax"><label
+                                    for="chk-relax">🧖 Relax</label>
                             </span>
 
                             <span class="filter-group group-crucero" style="display:none;">
-                                <input type="checkbox" id="chk-casino" name="intereses" value="casino"><label for="chk-casino">🎰 Casino</label>
-                                <input type="checkbox" id="chk-bordo" name="intereses" value="entretenimiento"><label for="chk-bordo">🎭 Shows a Bordo</label>
-                                <input type="checkbox" id="chk-vista" name="intereses" value="vista_mar"><label for="chk-vista">🌊 Vista al Mar</label>
-                                <input type="checkbox" id="chk-all" name="intereses" value="all_inclusive"><label for="chk-all">🍹 All Inclusive</label>
+                                <strong style="font-size:0.8rem; color:#555; display:block; margin-bottom:5px;">📍
+                                    Destino:</strong>
+                                <input type="checkbox" id="chk-caribe" name="intereses" value="caribe"><label
+                                    for="chk-caribe">☀️ Caribe</label>
+                                <input type="checkbox" id="chk-mediterraneo" name="intereses"
+                                    value="mediterraneo"><label for="chk-mediterraneo">🏛️ Mediterráneo</label>
+                                <input type="checkbox" id="chk-disney" name="intereses" value="disney"><label
+                                    for="chk-disney">🏰 Disney</label>
+                                <input type="checkbox" id="chk-sudamerica" name="intereses" value="sudamerica"><label
+                                    for="chk-sudamerica">🗺️ Sudamérica</label>
+                                <strong style="font-size:0.8rem; color:#555; display:block; margin: 8px 0 5px;">🎯
+                                    Experiencia:</strong>
+                                <input type="checkbox" id="chk-casino" name="intereses" value="casino"><label
+                                    for="chk-casino">🎰 Casino</label>
+                                <input type="checkbox" id="chk-bordo" name="intereses" value="entretenimiento"><label
+                                    for="chk-bordo">🎭 Shows a Bordo</label>
+                                <input type="checkbox" id="chk-vista" name="intereses" value="vista_mar"><label
+                                    for="chk-vista">🌊 Vista al Mar</label>
+                                <input type="checkbox" id="chk-all" name="intereses" value="all_inclusive"><label
+                                    for="chk-all">🍹 All Inclusive</label>
                             </span>
 
                         </div>
@@ -143,7 +193,8 @@
                         <div class="photo-upload" onclick="document.getElementById('file-input').click()">
                             <i class="fa-solid fa-cloud-arrow-up"></i>
                             <p>Clic para subir fotos</p>
-                            <input type="file" id="file-input" name="fotos" multiple accept="image/*" style="display:none" onchange="previewImages(this)">
+                            <input type="file" id="file-input" name="fotos" multiple accept="image/*"
+                                style="display:none" onchange="previewImages(this)">
                         </div>
                         <div class="gallery-preview" id="gallery"></div>
                     </div>
@@ -156,14 +207,16 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary" id="btn-submit">PUBLICAR</button>
-                    <p id="loader" style="display:none; text-align:center; color: #c5a059; margin-top:10px;"><i class="fa-solid fa-spinner fa-spin"></i> Comprimiendo y subiendo...</p>
+                    <p id="loader" style="display:none; text-align:center; color: #c5a059; margin-top:10px;"><i
+                            class="fa-solid fa-spinner fa-spin"></i> Comprimiendo y subiendo...</p>
                 </form>
             </div>
 
             <div class="card full-height">
                 <div class="card-header">
                     <h2><i class="fa-solid fa-list-check"></i> Paquetes Activos</h2>
-                    <button class="btn btn-refresh" onclick="cargarPaquetes()" title="Actualizar"><i class="fa-solid fa-sync"></i></button>
+                    <button class="btn btn-refresh" onclick="cargarPaquetes()" title="Actualizar"><i
+                            class="fa-solid fa-sync"></i></button>
                 </div>
                 <div id="lista-paquetes" class="package-list">
                     <div class="loading-state">Cargando...</div>
@@ -175,9 +228,10 @@
             <div class="card">
                 <div class="card-header">
                     <h2><i class="fa-solid fa-users-viewfinder"></i> Clientes Interesados</h2>
-                    <button class="btn btn-refresh" onclick="cargarSolicitudes()"><i class="fa-solid fa-sync"></i></button>
+                    <button class="btn btn-refresh" onclick="cargarSolicitudes()"><i
+                            class="fa-solid fa-sync"></i></button>
                 </div>
-                
+
                 <div class="table-container">
                     <table class="crm-table">
                         <thead>
@@ -185,14 +239,129 @@
                                 <th>Fecha</th>
                                 <th>Cliente</th>
                                 <th>Interés</th>
+                                <th>Estado</th>
                                 <th>Contacto</th>
                                 <th>Acción</th>
                             </tr>
                         </thead>
                         <tbody id="lista-solicitudes">
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+
+        <div id="tab-newsletter" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-at icon-gold"></i> Suscriptores Newsletter</h2>
+                    <button class="btn btn-refresh" onclick="cargarNewsletter()"><i
+                            class="fa-solid fa-sync"></i></button>
+                </div>
+                <div class="table-container">
+                    <table class="crm-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Email</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-newsletter"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-reclamos" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-book-open icon-gold"></i> Libro de Reclamaciones</h2>
+                    <button class="btn btn-refresh" onclick="cargarReclamos()"><i class="fa-solid fa-sync"></i></button>
+                </div>
+                <div class="table-container">
+                    <table class="crm-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Fecha</th>
+                                <th>Cliente</th>
+                                <th>Tipo</th>
+                                <th>Detalle</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-reclamos"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-papelera" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-trash-can icon-gold"></i> Papelera de Reciclaje</h2>
+                    <button class="btn btn-refresh" onclick="cargarPapelera()"><i class="fa-solid fa-sync"></i></button>
+                </div>
+                <div id="lista-papelera" class="package-list"></div>
+            </div>
+        </div>
+
+        <div id="tab-clientes" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-user-group icon-gold"></i> Base de Clientes</h2>
+                    <button class="btn btn-refresh" onclick="cargarClientes()"><i class="fa-solid fa-sync"></i></button>
+                </div>
+                <div class="table-container">
+                    <table class="crm-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Contacto</th>
+                                <th>Intereses</th>
+                                <th>Consultas</th>
+                                <th>Última Consulta</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-clientes"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-dashboard" class="tab-content">
+            <div class="section-header">
+                <h2>📊 Dashboard</h2>
+                <button class="btn btn-refresh" onclick="cargarDashboard()"><i class="fa-solid fa-sync"></i></button>
+            </div>
+            <div id="dashboard-content">
+                <p style="text-align:center; padding:40px; color:#94a3b8;">Cargando métricas...</p>
+            </div>
+        </div>
+
+        <div id="tab-accesos" class="tab-content">
+            <div class="section-header">
+                <h2>📡 Registro de Accesos</h2>
+                <button class="btn btn-refresh" onclick="cargarAccesos()"><i class="fa-solid fa-sync"></i></button>
+            </div>
+            <div id="accesos-stats" style="margin-bottom:16px;"></div>
+            <div class="table-container">
+                <table class="crm-table">
+                    <thead>
+                        <tr>
+                            <th>IP</th>
+                            <th>🌍 País</th>
+                            <th>🏙️ Ciudad</th>
+                            <th>📱 Dispositivo</th>
+                            <th>📄 Ruta</th>
+                            <th>📅 Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-accesos"></tbody>
+                </table>
             </div>
         </div>
 
@@ -200,4 +369,5 @@
 
     <script src="js/admin.js"></script>
 </body>
+
 </html>

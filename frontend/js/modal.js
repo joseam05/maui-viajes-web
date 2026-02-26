@@ -4,28 +4,28 @@ let currentImages = []; // Fotos del paquete actual
 let currentImageIndex = 0; // Índice de la foto actual
 let paqueteActualTitulo = ""; // <--- NUEVO: Para saber qué paquete se cotiza
 
-window.openPackageModal = function(pkg) {
+window.openPackageModal = function (pkg) {
     const modal = document.getElementById('package-modal');
     if (!modal) return;
 
     // 1. PREPARAR FOTOS (CARRUSEL)
-    currentImages = (pkg.imagenes && pkg.imagenes.length > 0) 
-        ? pkg.imagenes 
-        : ['img/hero-bg.jpg']; 
+    currentImages = (pkg.imagenes && pkg.imagenes.length > 0)
+        ? pkg.imagenes
+        : ['img/carrusel1.jpg'];
     currentImageIndex = 0;
-    updateModalImage(); 
+    updateModalImage();
 
     // 2. GUARDAR TÍTULO (IMPORTANTE PARA EL CORREO)
-    paqueteActualTitulo = pkg.titulo; 
+    paqueteActualTitulo = pkg.titulo;
 
     // 3. TEXTOS BÁSICOS
-    const moneda = pkg.moneda === 'USD' ? 'US$' : 'S/';
+    const moneda = pkg.moneda === 'USD' ? 'US$' : 'S/.';
     document.getElementById('modal-titulo').textContent = pkg.titulo;
     document.getElementById('modal-precio').textContent = `${moneda} ${pkg.precio}`;
-    
+
     // Vigencia con estilo
     const elVigencia = document.getElementById('modal-vigencia');
-    if(elVigencia) elVigencia.innerHTML = `<i class="far fa-calendar-alt"></i> ${pkg.vigencia || "Consultar fechas"}`;
+    if (elVigencia) elVigencia.innerHTML = `<i class="far fa-calendar-alt"></i> ${pkg.vigencia || "Consultar fechas"}`;
 
     // 4. FORMATO DE DESCRIPCIÓN (Tu código "Luxury")
     const elDescripcion = document.getElementById('modal-descripcion');
@@ -37,11 +37,15 @@ window.openPackageModal = function(pkg) {
         elDescripcion.textContent = "Sin descripción detallada.";
     }
 
-    // 5. LISTA DE "INCLUYE"
+    // 5. LISTA DE "INCLUYE" (con fallback para paquetes antiguos)
     const lista = document.getElementById('modal-incluye');
     lista.innerHTML = '';
-    if (pkg.incluye_total) {
-        pkg.incluye_total.forEach(item => {
+    let itemsIncluye = pkg.incluye_total;
+    if (!itemsIncluye && pkg.incluye && typeof pkg.incluye === 'string') {
+        itemsIncluye = pkg.incluye.split('\n').map(l => l.replace(/^[•\-\*]\s*/, '').trim()).filter(l => l.length > 0);
+    }
+    if (itemsIncluye && itemsIncluye.length > 0) {
+        itemsIncluye.forEach(item => {
             const li = document.createElement('li');
             li.innerHTML = `<i class="fas fa-check-circle" style="color:#c5a059; margin-right:8px;"></i> ${item}`;
             lista.appendChild(li);
@@ -66,7 +70,7 @@ window.openPackageModal = function(pkg) {
             modal.style.display = 'none';
             // Abrimos el modal del formulario (función está en main.js)
             if (typeof abrirModalCotizar === "function") {
-                abrirModalCotizar(pkg.titulo); 
+                abrirModalCotizar(pkg.titulo);
             } else {
                 console.error("Falta la función abrirModalCotizar en main.js");
             }
@@ -88,25 +92,25 @@ function updateModalImage() {
             imgElement.style.opacity = '1';
         }, 200);
     }
-    
+
     const btnPrev = document.getElementById('modal-prev');
     const btnNext = document.getElementById('modal-next');
-    
+
     if (currentImages.length <= 1) {
-        if(btnPrev) btnPrev.style.display = 'none';
-        if(btnNext) btnNext.style.display = 'none';
+        if (btnPrev) btnPrev.style.display = 'none';
+        if (btnNext) btnNext.style.display = 'none';
     } else {
-        if(btnPrev) btnPrev.style.display = 'block';
-        if(btnNext) btnNext.style.display = 'block';
+        if (btnPrev) btnPrev.style.display = 'block';
+        if (btnNext) btnNext.style.display = 'block';
     }
 }
 
-window.nextImage = function() {
+window.nextImage = function () {
     currentImageIndex = (currentImageIndex + 1) % currentImages.length;
     updateModalImage();
 };
 
-window.prevImage = function() {
+window.prevImage = function () {
     currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
     updateModalImage();
 };
@@ -116,15 +120,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cerrar Modal de Detalles
     const modalPackage = document.getElementById('package-modal');
     const closeBtns = document.querySelectorAll('.close-modal'); // Selecciona todas las 'X'
-    
+
     closeBtns.forEach(btn => {
-        btn.onclick = function() {
+        btn.onclick = function () {
             // Cierra el modal padre del botón
             const modal = btn.closest('.modal') || btn.closest('.modal-cotizacion');
             if (modal) modal.style.display = 'none';
         }
     });
-    
+
     // Cerrar al dar click afuera (Maneja ambos modales)
     window.onclick = (e) => {
         if (e.target.classList.contains('modal') || e.target.classList.contains('modal-cotizacion')) {

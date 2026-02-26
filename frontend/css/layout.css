@@ -12,7 +12,10 @@ body {
     overflow-x: hidden;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     font-family: 'Playfair Display', serif;
     color: var(--azul-noche);
     margin-top: 0;
@@ -33,10 +36,12 @@ header.navbar {
     z-index: 1000;
     background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(10px);
-    padding: 0 5%; /* Padding solo lateral */
-    height: 80px; /* Altura fija importante */
+    padding: 0 5%;
+    /* Padding solo lateral */
+    height: 80px;
+    /* Altura fija importante */
     border-bottom: 1px solid rgba(197, 160, 89, 0.2);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     display: flex;
     align-items: center;
 }
@@ -47,24 +52,30 @@ header.navbar {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    justify-content: space-between; /* Logo izq, Menú der */
+    justify-content: space-between;
+    /* Logo izq, Menú der */
     align-items: center;
 }
 
 /* LOGO */
 .logo img {
-    height: 55px; /* Altura fija */
+    height: 55px;
+    /* Altura fija */
     width: auto;
     display: block;
     transition: transform 0.3s ease;
 }
-.logo img:hover { transform: scale(1.05); }
+
+.logo img:hover {
+    transform: scale(1.05);
+}
 
 /* MENÚ COMPLETO EN PC (Enlaces + Botón) */
 #nav-menu-container {
     display: flex;
     align-items: center;
-    gap: 40px; /* Espacio entre los enlaces y el botón de reserva */
+    gap: 40px;
+    /* Espacio entre los enlaces y el botón de reserva */
 }
 
 /* Lista de Enlaces */
@@ -98,13 +109,20 @@ header.navbar {
     background-color: var(--oro-soft);
     transition: width 0.3s ease;
 }
-.nav-links a:hover { color: var(--oro-soft); }
-.nav-links a:hover::after { width: 100%; }
+
+.nav-links a:hover {
+    color: var(--oro-soft);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
 
 /* Botón Reservar (Estilo Botón, no enlace simple) */
 .btn-nav-reserva {
     background-color: var(--oro-soft);
-    color: var(--blanco) !important; /* Forzar blanco */
+    color: var(--blanco) !important;
+    /* Forzar blanco */
     padding: 12px 25px;
     border-radius: 30px;
     text-transform: uppercase;
@@ -115,19 +133,23 @@ header.navbar {
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
 }
+
 .btn-nav-reserva:hover {
     background-color: var(--azul-noche);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(15, 23, 42, 0.4);
 }
+
 /* Quitamos la línea de subrayado del hover normal */
-.btn-nav-reserva::after { display: none; }
+.btn-nav-reserva::after {
+    display: none;
+}
 
 
 /* === BOTÓN HAMBURGUESA (CRÍTICO: OCULTO EN PC) === */
 #menu-toggle {
     /* EL !important ASEGURA QUE SE OCULTE EN ESCRITORIO */
-    display: none !important; 
+    display: none !important;
     background: none;
     border: none;
     font-size: 1.8rem;
@@ -142,24 +164,39 @@ header.navbar {
 
 .hero {
     position: relative;
-    height: 85vh; 
+    height: 85vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    
-    background-color: var(--azul-noche); 
-    
-    /* AGREGA ESTA LÍNEA AQUÍ 👇 */
-    background-image: url('../img/carrusel1.jpg'); /* Tu primera foto por defecto */
-    
-    background-size: cover;              
-    background-position: center center;  
+
+    background-color: #1a1a2e;
+    /* Fondo oscuro neutro para evitar flash azul */
+
+    background-image: url('../img/carrusel1.jpg');
+    background-size: cover;
+    background-position: center center;
     background-repeat: no-repeat;
-    transition: background-image 1s ease-in-out; 
-    
+    /* NO usamos transition en background-image porque no es animable */
+
     color: var(--blanco);
     overflow: hidden;
+}
+
+/* Capa de crossfade para transición suave del hero slider */
+.hero-crossfade {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+    z-index: 0;
+}
+
+.hero-crossfade.visible {
+    opacity: 1;
 }
 
 /* Agrega esto justo debajo para asegurar que el degradado oscuro siempre esté encima de la foto */
@@ -169,8 +206,10 @@ header.navbar {
     inset: 0;
     background: linear-gradient(to bottom, rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.8));
     z-index: 1;
-    pointer-events: none; /* Deja pasar los clics */
+    pointer-events: none;
+    /* Deja pasar los clics */
 }
+
 .overlay {
     position: relative;
     z-index: 2;
@@ -178,13 +217,19 @@ header.navbar {
     max-width: 800px;
     animation: fadeIn 1s ease-out;
 }
+
 .overlay h1 {
     font-size: clamp(2.5rem, 5vw, 4.5rem);
     color: var(--blanco);
     line-height: 1.1;
     margin-bottom: 15px;
 }
-.overlay h1 span { color: var(--oro-soft); font-style: italic; }
+
+.overlay h1 span {
+    color: var(--oro-soft);
+    font-style: italic;
+}
+
 .overlay p {
     font-size: 1.2rem;
     color: rgba(255, 255, 255, 0.9);
@@ -192,13 +237,17 @@ header.navbar {
     font-weight: 300;
 }
 
-section { padding: 80px 0; }
+section {
+    padding: 80px 0;
+}
+
 section h2 {
     font-size: 2.2rem;
     text-align: center;
     margin-bottom: 50px;
     position: relative;
 }
+
 section h2::after {
     content: "";
     display: block;
@@ -208,21 +257,32 @@ section h2::after {
     margin: 15px auto 0;
 }
 
-.about { background-color: var(--blanco); }
+.about {
+    background-color: var(--blanco);
+}
+
 .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: center;
 }
-.about-grid iframe {
+
+.about-grid iframe,
+.about-grid .videos img {
     width: 100%;
-    height: 350px;
+    max-height: 450px;
+    object-fit: contain;
     border: none;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.beneficios-section { background-color: var(--gris-fondo); text-align: center; }
+.beneficios-section {
+    background-color: var(--gris-fondo);
+    text-align: center;
+}
+
 .beneficios-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -230,7 +290,10 @@ section h2::after {
     margin-top: 40px;
 }
 
-.prueba-social-section { background-color: var(--blanco); text-align: center; }
+.prueba-social-section {
+    background-color: var(--blanco);
+    text-align: center;
+}
 
 
 /* === 4. FOOTER === */
@@ -242,12 +305,14 @@ section h2::after {
     margin-top: auto;
     border-top: 4px solid var(--oro-soft);
 }
+
 .footer-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 50px;
     margin-bottom: 60px;
 }
+
 .footer-col h4 {
     color: var(--oro-soft);
     margin-bottom: 30px;
@@ -256,8 +321,17 @@ section h2::after {
     text-transform: uppercase;
     font-family: 'Playfair Display', serif;
 }
-.footer-links { list-style: none; padding: 0; margin: 0; }
-.footer-links li { margin-bottom: 12px; }
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
 .footer-links a {
     color: inherit;
     text-decoration: none;
@@ -266,10 +340,24 @@ section h2::after {
     align-items: center;
     gap: 8px;
 }
-.footer-links a:hover { color: var(--blanco); padding-left: 5px; }
-.footer-links a i { font-size: 0.7rem; color: var(--oro-soft); }
 
-.contact-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+.footer-links a:hover {
+    color: var(--blanco);
+    padding-left: 5px;
+}
+
+.footer-links a i {
+    font-size: 0.7rem;
+    color: var(--oro-soft);
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
 .contact-item i {
     color: var(--oro-soft);
     font-size: 1.2rem;
@@ -277,7 +365,11 @@ section h2::after {
     text-align: center;
     flex-shrink: 0;
 }
-.phones p { margin: 0; line-height: 1.4; }
+
+.phones p {
+    margin: 0;
+    line-height: 1.4;
+}
 
 .footer-bottom {
     text-align: center;
@@ -288,9 +380,18 @@ section h2::after {
     flex-direction: column;
     align-items: center;
 }
-.footer-bottom p { margin: 5px 0; font-size: 0.85rem; opacity: 0.6; }
 
-.social-icons { display: flex; gap: 15px; }
+.footer-bottom p {
+    margin: 5px 0;
+    font-size: 0.85rem;
+    opacity: 0.6;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
 .social-icons a {
     width: 40px;
     height: 40px;
@@ -304,9 +405,18 @@ section h2::after {
     text-decoration: none;
     transition: all 0.3s ease;
 }
-.social-icons a:hover { background: var(--oro-soft); color: var(--azul-noche); transform: translateY(-3px); }
 
-.newsletter { display: flex; margin-top: 15px; }
+.social-icons a:hover {
+    background: var(--oro-soft);
+    color: var(--azul-noche);
+    transform: translateY(-3px);
+}
+
+.newsletter {
+    display: flex;
+    margin-top: 15px;
+}
+
 .newsletter input {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -316,6 +426,7 @@ section h2::after {
     border-radius: 4px 0 0 4px;
     outline: none;
 }
+
 .newsletter button {
     background: var(--oro-soft);
     border: 1px solid var(--oro-soft);
@@ -325,7 +436,10 @@ section h2::after {
     border-radius: 0 4px 4px 0;
     transition: 0.3s;
 }
-.newsletter button:hover { background: white; }
+
+.newsletter button:hover {
+    background: white;
+}
 
 /* === 5. DECORACIÓN LATERAL === */
 .visual-bg-element {
@@ -340,38 +454,60 @@ section h2::after {
     pointer-events: none;
     filter: grayscale(100%);
 }
-.left-fixed { left: 0; background-image: url('../img/imagencostado.jpg'); }
-.right-fixed { right: 0; background-image: url('../img/argentina_vista_vertical.jpg'); }
+
+.left-fixed {
+    left: 0;
+    background-image: url('../img/imagencostado.jpg');
+}
+
+.right-fixed {
+    right: 0;
+    background-image: url('../img/imagencostado.jpg');
+}
 
 
 /* =========================================
    === 6. RESPONSIVE (MÓVIL - MENOS DE 900PX) ===
    ========================================= */
 @media (max-width: 900px) {
-    .visual-bg-element { display: none; }
-    .container { width: 92%; }
-    .about-grid { grid-template-columns: 1fr; }
-    .hero { height: 70vh; }
+    .visual-bg-element {
+        display: none;
+    }
+
+    .container {
+        width: 92%;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        height: 70vh;
+    }
 
     /* === HEADER MÓVIL === */
-    
+
     /* 1. MOSTRAR BOTÓN HAMBURGUESA */
     #menu-toggle {
-        display: block !important; /* Se fuerza a aparecer */
+        display: block !important;
+        /* Se fuerza a aparecer */
     }
 
     /* 2. OCULTAR Y REESTRUCTURAR EL MENÚ */
     #nav-menu-container {
-        display: none; /* Se oculta por defecto */
+        display: none;
+        /* Se oculta por defecto */
         position: absolute;
         top: 80px;
         left: 0;
         width: 100%;
         background-color: #fff;
-        flex-direction: column; /* Elementos uno debajo del otro */
+        flex-direction: column;
+        /* Elementos uno debajo del otro */
         padding: 30px 0;
         border-top: 1px solid #eee;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         gap: 25px;
     }
 
@@ -395,6 +531,13 @@ section h2::after {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

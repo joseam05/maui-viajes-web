@@ -59,6 +59,19 @@
     </section>
 
     <div class="container">
+        <!-- BUSCADOR + CONVERSOR DE MONEDA -->
+        <div class="search-bar-wrapper" style="margin-bottom: 25px;">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="search-input" placeholder="Buscar crucero, destino o naviera..."
+                    autocomplete="off">
+            </div>
+            <div class="currency-toggle" id="currency-toggle">
+                <button class="currency-btn active" data-currency="PEN"><span>S/.</span></button>
+                <button class="currency-btn" data-currency="USD"><span>US$</span></button>
+            </div>
+        </div>
+
         <div class="cruise-filters" id="filtrador-principal">
             <button class="pill-btn tab-btn active" data-filtro="todos">
                 <i class="fa-solid fa-anchor"></i> Todos
@@ -75,6 +88,9 @@
             <button class="pill-btn tab-btn" data-filtro="sudamerica">
                 <i class="fa-solid fa-map-location-dot"></i> Sudamérica
             </button>
+            <button class="pill-btn tab-btn" data-filtro="favoritos" style="color:#e74c3c;">
+                <i class="fa-solid fa-heart"></i> Favoritos
+            </button>
         </div>
 
         <h4 class="grid-title">Salidas Confirmadas 2025 - 2026</h4>
@@ -87,7 +103,8 @@
     <div id="package-modal" class="modal">
         <div class="modal-content">
             <div class="modal-img-container">
-                <img src="" id="modal-imagen" class="modal-carousel-img" alt="Foto crucero">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                    id="modal-imagen" class="modal-carousel-img" alt="Foto crucero">
                 <button class="modal-arrow prev" onclick="prevImage()">❮</button>
                 <button class="modal-arrow next" onclick="nextImage()">❯</button>
             </div>

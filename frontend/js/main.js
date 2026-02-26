@@ -3,6 +3,8 @@
 window.rawData = [];
 window.currentPrimary = 'todos';
 window.activeInterests = [];
+window.searchQuery = '';
+window.displayCurrency = 'original';
 
 document.addEventListener('DOMContentLoaded', async () => {
     console.log("🏁 INICIANDO SISTEMA MAUI VIAJES...");
@@ -111,6 +113,41 @@ function setupFilters() {
             window.updateUI();
         });
     });
+
+    // 3. BUSCADOR INTELIGENTE (con debounce)
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        let searchTimer = null;
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                window.searchQuery = e.target.value.trim();
+                window.updateUI();
+            }, 300);
+        });
+    }
+
+    // 4. CONVERSOR DE MONEDA
+    const currencyToggle = document.getElementById('currency-toggle');
+    if (currencyToggle) {
+        const currencyBtns = currencyToggle.querySelectorAll('.currency-btn');
+        currencyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currencyBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                window.displayCurrency = btn.dataset.currency;
+                window.updateUI();
+                // También volver a pintar promos
+                const gridPromos = document.getElementById('promociones-grid');
+                if (gridPromos && window.rawData) {
+                    const soloPromos = window.rawData.filter(p => p.is_promo === true);
+                    if (soloPromos.length > 0 && window.renderPackageGrid) {
+                        window.renderPackageGrid(soloPromos, 'promociones-grid');
+                    }
+                }
+            });
+        });
+    }
 }
 
 // --- FUNCIÓN QUE ACTUALIZA LA PANTALLA ---
@@ -125,18 +162,24 @@ window.updateUI = function () {
         return;
     }
 
-    // 2. Filtrar datos
+    // 2. Filtro de FAVORITOS (caso especial)
     let dataShow = window.rawData;
-    if (window.applyFilters) {
-        dataShow = window.applyFilters(window.rawData, window.currentPrimary, window.activeInterests);
+    if (window.currentPrimary === 'favoritos') {
+        const wishlist = window.getWishlist ? window.getWishlist() : [];
+        dataShow = dataShow.filter(p => wishlist.includes(p.id));
+    } else {
+        // Filtrar datos normales
+        if (window.applyFilters) {
+            dataShow = window.applyFilters(window.rawData, window.currentPrimary, window.activeInterests);
+        }
     }
 
     // 3. LOGICA ANTI-DUPLICADOS (EL CAMBIO MÁGICO ✨)
     const topPromosSection = document.getElementById('promociones'); // La sección de arriba
 
     if (topPromosSection) {
-        if (window.currentPrimary === 'promociones') {
-            // Si el usuario filtró "Ofertas", ocultamos la sección de arriba para no ver doble
+        if (window.currentPrimary === 'promociones' || window.currentPrimary === 'favoritos') {
+            // Si el usuario filtró "Ofertas" o "Favoritos", ocultamos la sección de arriba para no ver doble
             topPromosSection.style.display = 'none';
         } else {
             // Si filtró "Todos" u otra cosa, mostramos las destacadas arriba
@@ -144,7 +187,17 @@ window.updateUI = function () {
         }
     }
 
-    // 4. Pintar la grilla de abajo
+    // 4. Mostrar mensaje si no hay resultados
+    if (dataShow.length === 0) {
+        if (window.currentPrimary === 'favoritos') {
+            grid.innerHTML = '<p style="text-align:center; width:100%; color:#666; padding: 40px 0;"><i class="fa-regular fa-heart" style="font-size:2rem; color:#e74c3c; display:block; margin-bottom:12px;"></i>Aún no tienes favoritos.<br><small>Haz clic en el ❤ de un paquete para agregarlo.</small></p>';
+        } else {
+            grid.innerHTML = '<p style="text-align:center; width:100%; color:#666;">No se encontraron resultados.</p>';
+        }
+        return;
+    }
+
+    // 5. Pintar la grilla de abajo
     if (window.renderPackageGrid) {
         window.renderPackageGrid(dataShow, 'paquetes-grid');
     }
@@ -235,14 +288,40 @@ function setupGlobalUI() {
     // Menú móvil: el listener ya se registra en components.js al inyectar el header.
     // No duplicamos aquí para evitar toggle doble.
 
-    // Carrusel Hero (Solo si existe)
-    const heroSection = document.querySelector('.hero'); // Clase del home
+    // Carrusel Hero con CROSSFADE suave (Solo si existe)
+    const heroSection = document.querySelector('.hero');
     if (heroSection) {
         const images = ['img/carrusel1.jpg', 'img/carrusel2.jpg', 'img/carrusel3.jpg'];
-        let i = 0;
+        let currentIndex = 0;
+
+        // Precargar todas las imágenes para evitar flashes
+        images.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+
+        // Crear la capa de crossfade
+        const fadeLayer = document.createElement('div');
+        fadeLayer.className = 'hero-crossfade';
+        // Insertarla ANTES del overlay (::before) pero dentro del hero
+        heroSection.insertBefore(fadeLayer, heroSection.firstChild);
+
         setInterval(() => {
-            heroSection.style.backgroundImage = `url('${images[i]}')`;
-            i = (i + 1) % images.length;
+            // Avanzar al siguiente índice
+            currentIndex = (currentIndex + 1) % images.length;
+            const nextImage = images[currentIndex];
+
+            // 1. Poner la nueva imagen en la capa de fade (invisible aún)
+            fadeLayer.style.backgroundImage = `url('${nextImage}')`;
+
+            // 2. Hacer visible la capa (transición CSS de opacity)
+            fadeLayer.classList.add('visible');
+
+            // 3. Cuando termina la transición, poner la imagen en el fondo base y ocultar la capa
+            setTimeout(() => {
+                heroSection.style.backgroundImage = `url('${nextImage}')`;
+                fadeLayer.classList.remove('visible');
+            }, 1300); // Un poco más que la duración de la transición CSS (1.2s)
         }, 5000);
     }
 }

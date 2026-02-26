@@ -1,17 +1,17 @@
 // frontend/js/components.js
 
 document.addEventListener("DOMContentLoaded", () => {
-    loadHeader();
-    loadFooter();
+  loadHeader();
+  loadFooter();
 });
 
 // --- CARGAR HEADER (Menú General) ---
 function loadHeader() {
-    const headerContainer = document.getElementById("app-header");
-    if (!headerContainer) return;
+  const headerContainer = document.getElementById("app-header");
+  if (!headerContainer) return;
 
-    // HTML del Header (Limpio, solo clases)
-    const headerHTML = `
+  // HTML del Header (Limpio, solo clases)
+  const headerHTML = `
     <header class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">
@@ -39,35 +39,35 @@ function loadHeader() {
     </header>
     `;
 
-    headerContainer.innerHTML = headerHTML;
+  headerContainer.innerHTML = headerHTML;
 
-    // LÓGICA: Marcar la página activa automáticamente
-    const path = window.location.pathname;
-    const links = headerContainer.querySelectorAll('.nav-links a');
-    
-    links.forEach(link => {
-        const href = link.getAttribute('href');
-        // Si la URL actual incluye el enlace, lo activamos
-        if (path.includes(href) && href !== 'index.html') {
-            link.classList.add('active');
-        }
-        // Caso especial para el Home
-        if ((path === '/' || path.endsWith('index.html')) && href === 'index.html') {
-            link.classList.add('active');
-        }
-    });
+  // LÓGICA: Marcar la página activa automáticamente
+  const path = window.location.pathname;
+  const links = headerContainer.querySelectorAll('.nav-links a');
 
-    // LÓGICA: Menú Móvil
-    const menuToggle = document.getElementById('menu-toggle');
-    const navMenu = document.getElementById('nav-menu-container');
-    
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            const icon = menuToggle.querySelector('i');
-            if (icon) icon.className = navMenu.classList.contains('active') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
-        });
+  links.forEach(link => {
+    const href = link.getAttribute('href');
+    // Si la URL actual incluye el enlace, lo activamos
+    if (path.includes(href) && href !== 'index.html') {
+      link.classList.add('active');
     }
+    // Caso especial para el Home
+    if ((path === '/' || path.endsWith('index.html')) && href === 'index.html') {
+      link.classList.add('active');
+    }
+  });
+
+  // LÓGICA: Menú Móvil
+  const menuToggle = document.getElementById('menu-toggle');
+  const navMenu = document.getElementById('nav-menu-container');
+
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      const icon = menuToggle.querySelector('i');
+      if (icon) icon.className = navMenu.classList.contains('active') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    });
+  }
 }
 
 // frontend/js/components.js
@@ -75,10 +75,10 @@ function loadHeader() {
 // ... (La función loadHeader déjala igual) ...
 
 function loadFooter() {
-    const footerContainer = document.getElementById("global-footer") || document.getElementById("app-footer");
-    if (!footerContainer) return;
+  const footerContainer = document.getElementById("global-footer") || document.getElementById("app-footer");
+  if (!footerContainer) return;
 
-    const footerHTML = `
+  const footerHTML = `
     <footer class="site-footer">
       <div class="container footer-grid">
         
@@ -114,7 +114,6 @@ function loadFooter() {
             <i class="fa-solid fa-phone"></i>
             <div class="phones">
                 <p>+51 931 629 438</p>
-                <p>+51 951 091 498</p>
             </div>
           </div>
 
@@ -160,25 +159,92 @@ function loadFooter() {
     </footer>
     `;
 
-    footerContainer.innerHTML = footerHTML;
+  footerContainer.innerHTML = footerHTML;
 }
 // --- BOTÓN FLOTANTE DE WHATSAPP (Inyección Automática) ---
 function renderFloatingWhatsApp() {
-    const numero = "51951091498"; // Tu número
-    const mensaje = "Hola, estoy viendo la web y quiero más información.";
-    
-    const waButton = document.createElement('a');
-    waButton.href = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-    waButton.target = "_blank";
-    waButton.className = "whatsapp-float";
-    waButton.innerHTML = '<i class="fa-brands fa-whatsapp"></i>';
-    waButton.setAttribute('aria-label', 'Chat en WhatsApp');
+  const numero = "51931629438"; // Tu número
+  const mensaje = "Hola, estoy viendo la web y quiero más información.";
 
-    document.body.appendChild(waButton);
+  const waButton = document.createElement('a');
+  waButton.href = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+  waButton.target = "_blank";
+  waButton.className = "whatsapp-float";
+  waButton.innerHTML = '<i class="fa-brands fa-whatsapp"></i>';
+  waButton.setAttribute('aria-label', 'Chat en WhatsApp');
+
+  document.body.appendChild(waButton);
 }
 
-// Ejecutamos la función cuando carga la página
+// --- TOAST NOTIFICATION ---
+function showToast(message, type = 'success') {
+  // Remover toast anterior si existe
+  const existing = document.querySelector('.newsletter-toast');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.className = `newsletter-toast ${type}`;
+  toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
+  document.body.appendChild(toast);
+
+  // Animar entrada
+  requestAnimationFrame(() => {
+    toast.classList.add('show');
+  });
+
+  // Auto-cerrar después de 4 segundos
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 500);
+  }, 4000);
+}
+
+// --- NEWSLETTER FUNCIONAL ---
+function setupNewsletter() {
+  const form = document.querySelector('.newsletter');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = form.querySelector('input[type="email"]');
+    const email = input.value.trim();
+    const btn = form.querySelector('button');
+
+    if (!email) return;
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        showToast('¡Suscrito exitosamente! 🎉 Recibirás nuestras mejores ofertas.');
+        input.value = '';
+      } else if (data.duplicate) {
+        showToast('Ya estás suscrito con este email 😊', 'success');
+        input.value = '';
+      } else {
+        showToast('Error al suscribirse. Intenta de nuevo.', 'error');
+      }
+    } catch (err) {
+      console.error('Newsletter error:', err);
+      showToast('Error de conexión. Intenta de nuevo.', 'error');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>';
+    }
+  });
+}
+
+// Ejecutamos las funciones cuando carga la página
 document.addEventListener('DOMContentLoaded', () => {
-    // Si ya tienes otras funciones aquí, solo agrega la llamada:
-    renderFloatingWhatsApp();
+  renderFloatingWhatsApp();
+  setupNewsletter();
 });
