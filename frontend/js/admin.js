@@ -3,7 +3,9 @@
 const API_URL = '/api';
 let usuarioActual = { nombre: '', rol: '' };
 
-// 1. COMPRESIÓN DE IMÁGENES (SÍ, ESTÁ AQUÍ 👇)
+// ============================================================
+// 1. COMPRESIÓN DE IMÁGENES
+// ============================================================
 async function comprimirImagen(archivo) {
     return new Promise((resolve) => {
         const maxWidth = 1200;
@@ -28,7 +30,9 @@ async function comprimirImagen(archivo) {
     });
 }
 
+// ============================================================
 // 2. LOGIN
+// ============================================================
 async function login() {
     const u = document.getElementById('user').value.trim();
     const p = document.getElementById('pass').value.trim();
@@ -59,13 +63,18 @@ function configurarInterfaz() {
     document.getElementById('avatar-initial').textContent = usuarioActual.nombre.charAt(0).toUpperCase();
     document.getElementById('card-crear-paquete').classList.remove('hidden');
 
-    // Counter: no ve Reclamos ni Papelera
     const isAdmin = usuarioActual.rol === 'admin' || usuarioActual.rol === 'dev';
+
+    // Mostrar papelera solo para admin/dev
+    if (isAdmin) {
+        const papeleraSection = document.getElementById('papelera-section');
+        if (papeleraSection) papeleraSection.style.display = '';
+    }
+
+    // Reclamos solo visibles para admin/dev (el card dentro de dashboard)
     if (!isAdmin) {
-        const navReclamos = document.getElementById('nav-reclamos');
-        const navPapelera = document.getElementById('nav-papelera');
-        if (navReclamos) navReclamos.style.display = 'none';
-        if (navPapelera) navPapelera.style.display = 'none';
+        const cardReclamos = document.getElementById('card-reclamos');
+        if (cardReclamos) cardReclamos.style.display = 'none';
     }
 
     // Solo dev ve Accesos
@@ -77,7 +86,9 @@ function configurarInterfaz() {
 
 function logout() { if (confirm("¿Salir?")) location.reload(); }
 
-// 3. CARGAR PAQUETES (CON BADGES LUXURY ✨)
+// ============================================================
+// 3. PAQUETES
+// ============================================================
 async function cargarPaquetes() {
     const lista = document.getElementById('lista-paquetes');
     lista.innerHTML = '<div style="text-align:center; padding:20px;">Cargando...</div>';
@@ -87,16 +98,13 @@ async function cargarPaquetes() {
         const paquetes = await res.json();
         lista.innerHTML = '';
 
-        if (paquetes.length === 0) { lista.innerHTML = '<p style="text-align:center;">No hay paquetes.</p>'; return; }
+        if (paquetes.length === 0) { lista.innerHTML = '<p style="text-align:center; padding:30px; color:#94a3b8;"><i class="fa-solid fa-suitcase-rolling" style="font-size:2rem; display:block; margin-bottom:10px; color:#cbd5e1;"></i>No hay paquetes publicados</p>'; return; }
 
         paquetes.forEach(p => {
             const img = (p.imagenes && p.imagenes.length > 0) ? p.imagenes[0] : 'img/placeholder.jpg';
-
-            // GENERAR BADGES HTML
             const tagPromo = p.is_promo ? '<span class="badge badge-promo">🔥 OFERTA</span>' : '';
             const tagCrucero = p.tipo === 'crucero' ? '<span class="badge badge-cruise">🚢 CRUCERO</span>' : '';
 
-            // BOTÓN BORRAR (Admin/Dev)
             let btnDelete = '';
             if (usuarioActual.rol === 'admin' || usuarioActual.rol === 'dev') {
                 btnDelete = `<button class="btn-action btn-action-danger" onclick="borrarPaquete('${p.id}')" title="Eliminar"><i class="fa-solid fa-trash"></i></button>`;
@@ -130,9 +138,12 @@ async function borrarPaquete(id) {
     if (!confirm("¿Mover este paquete a la papelera?")) return;
     await fetch(`${API_URL}/borrar-paquete/${id}`, { method: 'DELETE' });
     cargarPaquetes();
+    cargarPapelera();
 }
 
-// 4. PUBLICAR (CON COMPRESIÓN)
+// ============================================================
+// 4. PUBLICAR PAQUETE
+// ============================================================
 document.getElementById('tour-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!confirm("¿Publicar servicio?")) return;
@@ -143,14 +154,11 @@ document.getElementById('tour-form').addEventListener('submit', async (e) => {
 
     try {
         const formData = new FormData();
-        // Campos texto
         const inputs = e.target.querySelectorAll('input:not([type="file"]):not([type="checkbox"]), select, textarea');
         inputs.forEach(i => formData.append(i.name, i.value));
-        // Checkboxes
         e.target.querySelectorAll('input[name="intereses"]:checked').forEach(c => formData.append('intereses', c.value));
         formData.append('is_promo', document.querySelector('[name="is_promo"]').checked);
 
-        // IMÁGENES + COMPRESIÓN
         const fileInput = document.getElementById('file-input');
         if (fileInput.files.length > 0) {
             for (let i = 0; i < fileInput.files.length; i++) {
@@ -173,7 +181,9 @@ document.getElementById('tour-form').addEventListener('submit', async (e) => {
     finally { btn.disabled = false; loader.style.display = 'none'; }
 });
 
-// 5. CRM (SOLICITUDES CON KANBAN)
+// ============================================================
+// 5. CRM (SOLICITUDES)
+// ============================================================
 const ESTADOS_KANBAN = {
     'nuevo': { label: '🆕 Nuevo', class: 'badge-nuevo' },
     'contactado': { label: '📞 Contactado', class: 'badge-contactado' },
@@ -197,7 +207,6 @@ async function cargarSolicitudes() {
             const estado = s.estado || 'nuevo';
             const estadoInfo = ESTADOS_KANBAN[estado] || ESTADOS_KANBAN['nuevo'];
 
-            // Dropdown de estado
             const selectHTML = `
                 <select class="kanban-select ${estadoInfo.class}" onchange="cambiarEstadoSolicitud('${s.id}', this.value)">
                     ${Object.entries(ESTADOS_KANBAN).map(([key, val]) =>
@@ -205,7 +214,6 @@ async function cargarSolicitudes() {
             ).join('')}
                 </select>`;
 
-            // BOTÓN BORRAR (Admin/Dev)
             let btnBorrar = '';
             if (usuarioActual.rol === 'admin' || usuarioActual.rol === 'dev') {
                 btnBorrar = `<button class="btn-delete" onclick="borrarSolicitud('${s.id}')" title="Borrar"><i class="fa-solid fa-xmark"></i></button>`;
@@ -238,31 +246,48 @@ window.cambiarEstadoSolicitud = async function (id, nuevoEstado) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ estado: nuevoEstado })
         });
-        // Actualizar color del select
         cargarSolicitudes();
     } catch (e) { console.error(e); }
 };
 
-// 6. UI
+// ============================================================
+// 6. NAVEGACIÓN (5 pestañas consolidadas)
+// ============================================================
 window.cambiarPestana = function (tab) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`tab-${tab}`).classList.add('active');
 
-    const tabs = ['paquetes', 'solicitudes', 'newsletter', 'reclamos', 'papelera', 'clientes', 'dashboard', 'accesos'];
+    const tabs = ['paquetes', 'crm', 'newsletter', 'dashboard', 'accesos'];
     const idx = tabs.indexOf(tab);
-    if (idx >= 0) document.querySelectorAll('.nav-btn')[idx].classList.add('active');
+    if (idx >= 0) {
+        const navBtns = document.querySelectorAll('.nav-btn');
+        if (navBtns[idx]) navBtns[idx].classList.add('active');
+    }
 
-    if (tab === 'solicitudes') cargarSolicitudes();
+    if (tab === 'crm') { cargarSolicitudes(); cargarClientes(); }
     if (tab === 'newsletter') cargarNewsletter();
-    if (tab === 'reclamos') cargarReclamos();
-    if (tab === 'papelera') cargarPapelera();
-    if (tab === 'clientes') cargarClientes();
-    if (tab === 'dashboard') cargarDashboard();
+    if (tab === 'dashboard') { cargarDashboard(); cargarReclamos(); }
     if (tab === 'accesos') cargarAccesos();
 };
 
-// === NEWSLETTER ===
+// Collapsible sections
+window.toggleSection = function (section) {
+    const body = document.getElementById(`${section}-body`);
+    const icon = document.getElementById(`${section}-toggle-icon`);
+    if (body.style.display === 'none') {
+        body.style.display = 'block';
+        icon.className = 'fa-solid fa-chevron-up toggle-icon';
+        if (section === 'papelera') cargarPapelera();
+    } else {
+        body.style.display = 'none';
+        icon.className = 'fa-solid fa-chevron-down toggle-icon';
+    }
+};
+
+// ============================================================
+// 7. NEWSLETTER
+// ============================================================
 async function cargarNewsletter() {
     const tbody = document.getElementById('lista-newsletter');
     tbody.innerHTML = '<tr><td colspan="4">Cargando...</td></tr>';
@@ -298,16 +323,18 @@ async function borrarNewsletter(id) {
     cargarNewsletter();
 }
 
-// === RECLAMOS ===
+// ============================================================
+// 8. RECLAMOS
+// ============================================================
 async function cargarReclamos() {
     const tbody = document.getElementById('lista-reclamos');
-    tbody.innerHTML = '<tr><td colspan="6">Cargando...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7">Cargando...</td></tr>';
     try {
         const res = await fetch(`${API_URL}/reclamaciones-admin`);
         const data = await res.json();
         tbody.innerHTML = '';
         if (!data || data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Sin reclamaciones ✨</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Sin reclamaciones ✨</td></tr>';
             return;
         }
         data.forEach(r => {
@@ -338,7 +365,9 @@ async function borrarReclamo(id) {
     cargarReclamos();
 }
 
-// === PAPELERA ===
+// ============================================================
+// 9. PAPELERA
+// ============================================================
 async function cargarPapelera() {
     const lista = document.getElementById('lista-papelera');
     lista.innerHTML = '<div style="text-align:center; padding:20px;">Cargando...</div>';
@@ -347,7 +376,7 @@ async function cargarPapelera() {
         const paquetes = await res.json();
         lista.innerHTML = '';
         if (paquetes.length === 0) {
-            lista.innerHTML = '<p style="text-align:center; padding:40px; color:#64748b;"><i class="fa-solid fa-trash-can" style="font-size:2rem; display:block; margin-bottom:12px; color:#cbd5e1;"></i>La papelera está vacía</p>';
+            lista.innerHTML = '<p style="text-align:center; padding:30px; color:#64748b;"><i class="fa-solid fa-trash-can" style="font-size:1.5rem; display:block; margin-bottom:10px; color:#cbd5e1;"></i>La papelera está vacía</p>';
             return;
         }
         paquetes.forEach(p => {
@@ -378,6 +407,7 @@ async function restaurarPaquete(id) {
     if (!confirm('¿Restaurar este paquete?')) return;
     await fetch(`${API_URL}/restaurar-paquete/${id}`, { method: 'POST' });
     cargarPapelera();
+    cargarPaquetes();
 }
 
 async function borrarPermanente(id) {
@@ -386,6 +416,9 @@ async function borrarPermanente(id) {
     cargarPapelera();
 }
 
+// ============================================================
+// 10. UI HELPERS
+// ============================================================
 window.actualizarEstiloTipo = function (tipo) {
     const box = document.querySelector('.type-selector-box');
     const gPaq = document.querySelector('.group-paquete');
@@ -409,7 +442,9 @@ window.previewImages = function (input) {
     });
 };
 
-// === CLIENTES ===
+// ============================================================
+// 11. CLIENTES
+// ============================================================
 async function cargarClientes() {
     const tbody = document.getElementById('lista-clientes');
     tbody.innerHTML = '<tr><td colspan="5">Cargando...</td></tr>';
@@ -441,7 +476,9 @@ async function cargarClientes() {
 }
 window.cargarClientes = cargarClientes;
 
-// === FASE 4: CLONADOR DE PAQUETES ===
+// ============================================================
+// 12. CLONAR, PDF, QUICK COPY
+// ============================================================
 window.clonarPaquete = async function (id) {
     if (!confirm('¿Crear una copia de este paquete?')) return;
     try {
@@ -454,26 +491,22 @@ window.clonarPaquete = async function (id) {
     } catch (e) { alert('Error clonando paquete'); }
 };
 
-// === FASE 4: COTIZACIÓN PDF ===
 window.generarCotizacion = function (id) {
     window.open(`${API_URL}/cotizacion/${id}`, '_blank');
 };
 
-// === FASE 4: QUICK COPY ===
 window.quickCopy = function (id, titulo, moneda, precio, duracion, isPromo) {
     const emoji = isPromo === 'true' ? '🔥 *OFERTA ESPECIAL* 🔥\n' : '';
     const simbolo = moneda === 'USD' ? 'US$' : 'S/.';
     const texto = `${emoji}✈️ *${titulo}*\n📅 ${duracion}\n💰 Desde ${simbolo} ${precio} por persona\n\n📲 Consulta por WhatsApp para más info\n🌐 www.mauiviajes.com`;
 
     navigator.clipboard.writeText(texto).then(() => {
-        // Show tooltip
         const toast = document.createElement('div');
         toast.className = 'toast-copied';
         toast.innerHTML = '<i class="fa-solid fa-check"></i> Copiado al portapapeles';
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 2000);
     }).catch(() => {
-        // Fallback
         const ta = document.createElement('textarea');
         ta.value = texto; document.body.appendChild(ta);
         ta.select(); document.execCommand('copy');
@@ -482,14 +515,15 @@ window.quickCopy = function (id, titulo, moneda, precio, duracion, isPromo) {
     });
 };
 
-// === FASE 4: DASHBOARD DE MÉTRICAS ===
+// ============================================================
+// 13. DASHBOARD
+// ============================================================
 async function cargarDashboard() {
     try {
         const res = await fetch(`${API_URL}/dashboard-metricas`);
         const m = await res.json();
         const container = document.getElementById('dashboard-content');
 
-        // KPI cards
         const kpiHTML = `
             <div class="dashboard-kpis">
                 <div class="kpi-card kpi-blue">
@@ -515,7 +549,6 @@ async function cargarDashboard() {
             </div>
         `;
 
-        // Pipeline de estados
         const total = m.total_solicitudes || 1;
         const pipeHTML = `
             <div class="dashboard-section">
@@ -541,7 +574,6 @@ async function cargarDashboard() {
             </div>
         `;
 
-        // Top paquetes
         let topHTML = '<div class="dashboard-section"><h3>🏆 Top Paquetes Más Consultados</h3>';
         if (m.top_paquetes.length === 0) {
             topHTML += '<p style="color:#94a3b8;">Sin datos aún</p>';
@@ -563,7 +595,9 @@ async function cargarDashboard() {
 }
 window.cargarDashboard = cargarDashboard;
 
-// === FASE: REGISTRO DE ACCESOS (solo dev) ===
+// ============================================================
+// 14. ACCESOS (solo dev)
+// ============================================================
 async function cargarAccesos() {
     const tbody = document.getElementById('lista-accesos');
     const stats = document.getElementById('accesos-stats');
@@ -585,7 +619,6 @@ async function cargarAccesos() {
 
         const logs = data.logs;
 
-        // Stats: visitantes únicos y países
         const uniqueIPs = new Set(logs.map(l => l.ip)).size;
         const countries = {};
         logs.forEach(l => { countries[l.pais] = (countries[l.pais] || 0) + 1; });
@@ -606,7 +639,6 @@ async function cargarAccesos() {
         }
 
         logs.forEach(l => {
-            // Parsear user agent para mostrar info resumida
             const ua = l.dispositivo || '';
             let device = 'Desconocido';
             if (ua.includes('iPhone')) device = '📱 iPhone';
@@ -618,7 +650,6 @@ async function cargarAccesos() {
             else if (ua.includes('bot') || ua.includes('Bot') || ua.includes('spider')) device = '🤖 Bot';
             else if (ua.includes('curl')) device = '⚡ curl';
 
-            // Extraer navegador
             let browser = '';
             if (ua.includes('Chrome') && !ua.includes('Edg')) browser = 'Chrome';
             else if (ua.includes('Firefox')) browser = 'Firefox';

@@ -7,7 +7,7 @@
     <title>Maui Admin | Panel de Control</title>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -16,6 +16,7 @@
 
 <body>
 
+    <!-- ============ LOGIN ============ -->
     <div id="login-screen">
         <div class="login-card">
             <div class="login-logo">✈️</div>
@@ -30,8 +31,10 @@
         </div>
     </div>
 
+    <!-- ============ ADMIN PANEL ============ -->
     <div id="admin-panel" style="display: none;">
 
+        <!-- ---- HEADER ---- -->
         <header class="top-bar">
             <div class="brand">
                 <i class="fa-solid fa-plane-departure icon-gold"></i>
@@ -40,22 +43,13 @@
 
             <nav class="admin-nav">
                 <button class="nav-btn active" onclick="cambiarPestana('paquetes')">
-                    <i class="fa-solid fa-suitcase"></i> Gestión
+                    <i class="fa-solid fa-suitcase"></i> Paquetes
                 </button>
-                <button class="nav-btn" onclick="cambiarPestana('solicitudes')">
-                    <i class="fa-solid fa-envelope-open-text"></i> Solicitudes
+                <button class="nav-btn" onclick="cambiarPestana('crm')">
+                    <i class="fa-solid fa-users-viewfinder"></i> CRM
                 </button>
                 <button class="nav-btn" onclick="cambiarPestana('newsletter')">
                     <i class="fa-solid fa-at"></i> Newsletter
-                </button>
-                <button class="nav-btn" id="nav-reclamos" onclick="cambiarPestana('reclamos')">
-                    <i class="fa-solid fa-book-open"></i> Reclamos
-                </button>
-                <button class="nav-btn" id="nav-papelera" onclick="cambiarPestana('papelera')">
-                    <i class="fa-solid fa-trash-can"></i> Papelera
-                </button>
-                <button class="nav-btn" id="nav-clientes" onclick="cambiarPestana('clientes')">
-                    <i class="fa-solid fa-user-group"></i> Clientes
                 </button>
                 <button class="nav-btn" id="nav-dashboard" onclick="cambiarPestana('dashboard')">
                     <i class="fa-solid fa-chart-line"></i> Dashboard
@@ -77,8 +71,10 @@
             </div>
         </header>
 
+        <!-- ============ TAB: PAQUETES (Crear + Listar + Papelera) ============ -->
         <div id="tab-paquetes" class="tab-content active dashboard-grid">
 
+            <!-- Crear paquete -->
             <div class="card" id="card-crear-paquete">
                 <div class="card-header">
                     <h2><i class="fa-solid fa-plus-circle icon-gold"></i> Publicar Servicio</h2>
@@ -212,6 +208,7 @@
                 </form>
             </div>
 
+            <!-- Lista de paquetes activos -->
             <div class="card full-height">
                 <div class="card-header">
                     <h2><i class="fa-solid fa-list-check"></i> Paquetes Activos</h2>
@@ -221,13 +218,26 @@
                 <div id="lista-paquetes" class="package-list">
                     <div class="loading-state">Cargando...</div>
                 </div>
+
+                <!-- Papelera integrada (collapsible) -->
+                <div class="collapsible-section" id="papelera-section" style="display:none;">
+                    <button class="collapsible-toggle" onclick="toggleSection('papelera')">
+                        <span><i class="fa-solid fa-trash-can"></i> Papelera de Reciclaje</span>
+                        <i class="fa-solid fa-chevron-down toggle-icon" id="papelera-toggle-icon"></i>
+                    </button>
+                    <div class="collapsible-body" id="papelera-body" style="display:none;">
+                        <div id="lista-papelera" class="package-list"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div id="tab-solicitudes" class="tab-content">
+        <!-- ============ TAB: CRM (Solicitudes + Clientes) ============ -->
+        <div id="tab-crm" class="tab-content">
+            <!-- Solicitudes -->
             <div class="card">
                 <div class="card-header">
-                    <h2><i class="fa-solid fa-users-viewfinder"></i> Clientes Interesados</h2>
+                    <h2><i class="fa-solid fa-users-viewfinder icon-gold"></i> Solicitudes de Clientes</h2>
                     <button class="btn btn-refresh" onclick="cargarSolicitudes()"><i
                             class="fa-solid fa-sync"></i></button>
                 </div>
@@ -249,8 +259,34 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Clientes agrupados (collapsible) -->
+            <div class="card" style="margin-top: 24px;">
+                <div class="card-header">
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <h2><i class="fa-solid fa-user-group icon-gold"></i> Base de Clientes</h2>
+                        <span class="badge badge-info">Auto-generado</span>
+                    </div>
+                    <button class="btn btn-refresh" onclick="cargarClientes()"><i class="fa-solid fa-sync"></i></button>
+                </div>
+                <div class="table-container">
+                    <table class="crm-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Contacto</th>
+                                <th>Intereses</th>
+                                <th>Consultas</th>
+                                <th>Última Consulta</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-clientes"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
+        <!-- ============ TAB: NEWSLETTER ============ -->
         <div id="tab-newsletter" class="tab-content">
             <div class="card">
                 <div class="card-header">
@@ -274,8 +310,18 @@
             </div>
         </div>
 
-        <div id="tab-reclamos" class="tab-content">
-            <div class="card">
+        <!-- ============ TAB: DASHBOARD (Métricas + Reclamos) ============ -->
+        <div id="tab-dashboard" class="tab-content">
+            <div class="section-header">
+                <h2>📊 Dashboard</h2>
+                <button class="btn btn-refresh" onclick="cargarDashboard()"><i class="fa-solid fa-sync"></i></button>
+            </div>
+            <div id="dashboard-content">
+                <p style="text-align:center; padding:40px; color:#94a3b8;">Cargando métricas...</p>
+            </div>
+
+            <!-- Reclamos integrados -->
+            <div class="card" style="margin-top: 24px;" id="card-reclamos">
                 <div class="card-header">
                     <h2><i class="fa-solid fa-book-open icon-gold"></i> Libro de Reclamaciones</h2>
                     <button class="btn btn-refresh" onclick="cargarReclamos()"><i class="fa-solid fa-sync"></i></button>
@@ -299,49 +345,7 @@
             </div>
         </div>
 
-        <div id="tab-papelera" class="tab-content">
-            <div class="card">
-                <div class="card-header">
-                    <h2><i class="fa-solid fa-trash-can icon-gold"></i> Papelera de Reciclaje</h2>
-                    <button class="btn btn-refresh" onclick="cargarPapelera()"><i class="fa-solid fa-sync"></i></button>
-                </div>
-                <div id="lista-papelera" class="package-list"></div>
-            </div>
-        </div>
-
-        <div id="tab-clientes" class="tab-content">
-            <div class="card">
-                <div class="card-header">
-                    <h2><i class="fa-solid fa-user-group icon-gold"></i> Base de Clientes</h2>
-                    <button class="btn btn-refresh" onclick="cargarClientes()"><i class="fa-solid fa-sync"></i></button>
-                </div>
-                <div class="table-container">
-                    <table class="crm-table">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Contacto</th>
-                                <th>Intereses</th>
-                                <th>Consultas</th>
-                                <th>Última Consulta</th>
-                            </tr>
-                        </thead>
-                        <tbody id="lista-clientes"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-dashboard" class="tab-content">
-            <div class="section-header">
-                <h2>📊 Dashboard</h2>
-                <button class="btn btn-refresh" onclick="cargarDashboard()"><i class="fa-solid fa-sync"></i></button>
-            </div>
-            <div id="dashboard-content">
-                <p style="text-align:center; padding:40px; color:#94a3b8;">Cargando métricas...</p>
-            </div>
-        </div>
-
+        <!-- ============ TAB: ACCESOS (dev-only) ============ -->
         <div id="tab-accesos" class="tab-content">
             <div class="section-header">
                 <h2>📡 Registro de Accesos</h2>

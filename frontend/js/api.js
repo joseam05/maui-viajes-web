@@ -19,15 +19,15 @@ const CACHE_KEY = 'maui_paquetes_data'; // Nombre del archivo en memoria
 const CACHE_TIME_KEY = 'maui_last_update'; // Cuándo se guardó
 
 // 4. Definimos la función globalmente
-window.fetchPackages = async function() {
+window.fetchPackages = async function () {
     console.log("🚀 Iniciando carga de paquetes...");
 
     // A. ESTRATEGIA: CACHE FIRST (Primero memoria, luego internet)
     const cachedData = localStorage.getItem(CACHE_KEY);
-    
+
     if (cachedData) {
         console.log("⚡ ¡Boom! Cargando desde caché instantáneo.");
-        
+
         // Lanzamos la actualización en segundo plano (sin await para no frenar la web)
         actualizarCacheEnSilencio();
 
@@ -48,18 +48,24 @@ async function descargarDeFirebase() {
     try {
         const paquetesCol = collection(db, 'paquetes');
         const snapshot = await getDocs(paquetesCol);
-        
-        const lista = snapshot.docs.map(doc => {
-            // Convertimos la fecha de Firebase a algo legible si es necesario
-            const data = doc.data();
-            return { id: doc.id, ...data };
-        });
+
+        // FILTRAR paquetes eliminados (soft-delete) para que no aparezcan en la web pública
+        const lista = snapshot.docs
+            .map(doc => {
+                const data = doc.data();
+                return { id: doc.id, ...data };
+            })
+            .filter(p => !p.eliminado); // ← FIX: excluir paquetes en papelera
 
         if (lista.length > 0) {
             // GUARDAMOS EN MEMORIA PARA LA PRÓXIMA
             localStorage.setItem(CACHE_KEY, JSON.stringify(lista));
             localStorage.setItem(CACHE_TIME_KEY, Date.now());
-            console.log(`💾 ${lista.length} paquetes guardados en memoria.`);
+            console.log(`💾 ${lista.length} paquetes activos guardados en memoria.`);
+        } else {
+            // Si no hay paquetes activos, limpiar cache viejo
+            localStorage.removeItem(CACHE_KEY);
+            localStorage.removeItem(CACHE_TIME_KEY);
         }
 
         return lista;
@@ -76,8 +82,8 @@ async function actualizarCacheEnSilencio() {
     const lastUpdate = localStorage.getItem(CACHE_TIME_KEY);
     const ahora = Date.now();
 
-    // 60000 ms = 1 minuto. Puedes subirlo a 5 minutos (300000) si prefieres
-    if (lastUpdate && (ahora - lastUpdate) < 60000) { 
+    // 30000 ms = 30 segundos. Reducido para que cambios del admin se reflejen más rápido
+    if (lastUpdate && (ahora - lastUpdate) < 30000) {
         console.log("⏳ Datos frescos. No es necesario molestar a Firebase aún.");
         return;
     }
